@@ -6,10 +6,13 @@ POST http://localhost:4000/api/trabajador
 Content-Type: application/json
 
 {
-    "nombre": "Luchoro",
-    "apellido": "Vasquez",
+    "nombre": "ssadada",
+    "apellido": "Vedsdadda",
     "comuna": "La Pintana",
-    "solicitudPendiente": false,
-    "genero": "Masculino"
+    "genero": "Masculino",
+    "telefono": "595959",
+    "correo": "jaja@gmail.com",
+    "contrasena": "123456",
+    "rut": "111111-1",
+    "direccion": "puticlub"
 }
-
