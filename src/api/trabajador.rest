@@ -1,0 +1,15 @@
+###
+GET http://localhost:4000/api/trabajador
+
+###
+POST http://localhost:4000/api/trabajador
+Content-Type: application/json
+
+{
+    "nombre": "Luchoro",
+    "apellido": "Vasquez",
+    "comuna": "La Pintana",
+    "solicitudPendiente": false,
+    "genero": "Masculino"
+}
+
