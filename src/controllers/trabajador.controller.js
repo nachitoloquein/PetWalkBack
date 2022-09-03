@@ -10,8 +10,8 @@ trabajadorCtrl.listarSolicitud = async(req,res)=>{
 
 trabajadorCtrl.enviarSolicitud = async(req, res)=>{
 try{
-    const {nombre, apellido, comuna, genero, telefono, correo, contrasena, rut, direccion} = req.body;
-    const newSolicitud = new Trabajador({nombre, apellido, comuna, genero, telefono, correo, contrasena, rut, direccion});
+    const {nombre, apellido, comuna, genero, telefono, correo, contrasena, rut, direccion, fechaNacimiento} = req.body;
+    const newSolicitud = new Trabajador({nombre, apellido, comuna, genero, telefono, correo, contrasena, rut, direccion, fechaNacimiento});
     await newSolicitud.save();
 
     res.send({message: 'Solicitud creada'})
