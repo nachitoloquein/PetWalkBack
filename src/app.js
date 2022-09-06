@@ -13,5 +13,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 //Establecemos el subdominio de los WebService
 app.use("/api/trabajador",require('./routes/trabajador.routes'));
+app.use("/api/comuna",require('./routes/comuna.routes'));
 //Exportamos el archivo
 module.exports = app;
