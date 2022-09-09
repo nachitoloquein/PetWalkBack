@@ -2,7 +2,7 @@ const comunasCtrl = {}
 const Comuna = require('../assets/comunas.json')
 
 comunasCtrl.listarComuna = async(req, res)=>{
-    res.json(Comuna);
+    res.send(Comuna);
 }
 
 module.exports = comunasCtrl;

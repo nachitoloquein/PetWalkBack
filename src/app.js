@@ -2,6 +2,7 @@ const express = require('express');
 const { json } = require('express/lib/response');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -15,4 +16,6 @@ app.use(express.urlencoded({extended:false}));
 app.use("/api/trabajador",require('./routes/trabajador.routes'));
 app.use("/api/comuna",require('./routes/comuna.routes'));
 //Exportamos el archivo
+app.use('/files', express.static(path.resolve('uploads')));
+
 module.exports = app;

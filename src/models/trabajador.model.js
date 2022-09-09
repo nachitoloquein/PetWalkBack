@@ -13,7 +13,8 @@ const trabajadorSchema = new Schema({
     rut: {type: String, required:true},
     direccion: {type: String, required: true},
     activo: {type: Boolean, required: true, default: false},
-    fechaNacimiento: {type: String, required: true}
+    fechaNacimiento: {type: String, required: true},
+    documentos: {type: Array, required: true},
 },{
     versionKey: false
 })
