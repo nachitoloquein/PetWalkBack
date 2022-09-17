@@ -1,0 +1,14 @@
+###
+POST http://localhost:4000/api/consumidor
+Content-Type: application/json
+
+{
+    "nombre": "ssadada",
+    "apellido": "Vedsdadda",
+    "comuna": "La Pintana",
+    "telefono": "595959",
+    "correo": "otros5@gmail.com",
+    "contrasena": "123456",
+    "direccion": "puticlub",
+    "fechaNacimiento": "kcyoxd"
+}

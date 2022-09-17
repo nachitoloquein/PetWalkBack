@@ -1,7 +1,7 @@
 const trabajadorCtrl = {}
 
 const Trabajador = require('../models/trabajador.model');
-const Helpers = require('../helpers/functions.helpers')
+const funciones = require('../helpers/functions.helpers')
 
 trabajadorCtrl.listarSolicitud = async(req,res)=>{
     const solicitudes = await Trabajador.find({solicitudPendiente: true});
@@ -12,8 +12,12 @@ trabajadorCtrl.enviarSolicitud = async(req, res)=>{
 try{
     let paths = req.files.map(file => file.path)
     const {nombre, apellido, comuna, genero, telefono, correo, contrasena, rut, direccion, fechaNacimiento } = req.body;
-    Helpers.validarExistente(Trabajador, correo);
-    const newTrabajador = {nombre: Helpers.capitalizar(nombre), apellido: Helpers.capitalizar(apellido), comuna, genero, telefono, correo, contrasena, rut, direccion, fechaNacimiento, documentos: paths};
+     //verificamos si existe dentro de la bdd
+     const usuarioExistente = await Trabajador.findOne({correo});
+     if(usuarioExistente){
+        return res.status(409).send({message: 'correo electrónico existente'});
+     }
+    const newTrabajador = {nombre: funciones.capitalizar(nombre), apellido: funciones.capitalizar(apellido), comuna, genero, telefono, correo, contrasena, rut, direccion, fechaNacimiento, documentos: paths};
     if (newTrabajador){
         const newSolicitud = new Trabajador(newTrabajador);
         await newSolicitud.save();
