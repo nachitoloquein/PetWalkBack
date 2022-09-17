@@ -4,6 +4,11 @@ const Consumidor = require('../models/consumidor.model');
 const bcrypt = require('bcrypt');
 const funciones = require('../helpers/functions.helpers');
 
+consumidorCtrl.listarConsumidores = async(req,res)=>{
+    const consumidores = await Consumidor.find();
+    res.json(consumidores);
+}
+
 consumidorCtrl.Registro = async(req, res)=>{
     try{
         const {nombre, apellido, comuna, telefono, correo, contrasena, direccion, fechaNacimiento } = req.body;
@@ -32,6 +37,16 @@ consumidorCtrl.Registro = async(req, res)=>{
     catch(err){
         res.send({message: 'Algo hiciste mal ' + err});
         console.log(err);
+    }
+}
+
+consumidorCtrl.buscarConsumidor = async(req, res)=>{
+    try{
+        const consumidor = await Consumidor.findById(req.params.id);
+        res.send(consumidor);
+    }
+    catch{
+        res.status(404);
     }
 }
 

@@ -33,4 +33,26 @@ catch(err){
     }
 }
 
+trabajadorCtrl.aceptar = async(req, res)=>{
+    try{
+        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: true , solicitudPendiente: false } });
+        
+        res.json({status: 'Trabajador habilitado'})
+    }
+    catch(err){
+        res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
+trabajadorCtrl.rechazar = async(req, res)=>{
+    try{
+        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: false , solicitudPendiente: false } });
+        
+        res.json({status: 'Trabajador rechazado'})
+    }
+    catch(err){
+        res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
 module.exports= trabajadorCtrl;

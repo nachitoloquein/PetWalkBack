@@ -17,3 +17,8 @@ Content-Type: multipart/form-data
     "direccion": "puticlub"
 }
 
+###
+PATCH http://localhost:4000/api/trabajador/aceptar/631be3f2d530beab34d49bce
+
+###
+PATCH http://localhost:4000/api/trabajador/rechazar/631be3f2d530beab34d49bce
