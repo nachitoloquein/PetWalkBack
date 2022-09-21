@@ -2,6 +2,9 @@
 GET http://localhost:4000/api/trabajador
 
 ###
+GET http://localhost:4000/api/trabajador/all
+
+###
 POST http://localhost:4000/api/trabajador
 Content-Type: multipart/form-data
 

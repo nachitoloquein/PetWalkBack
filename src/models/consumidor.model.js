@@ -9,7 +9,7 @@ const consumidorSchema = new Schema({
     correo: {type: String, required: true},
     contrasena: {type: String, required: true},
     direccion: {type: String, required: true},
-    activo: {type: Boolean, required: true, default: false},
+    activo: {type: Boolean, required: true, default: true},
     fechaNacimiento: {type: String, required: true},
 },{
     versionKey: false

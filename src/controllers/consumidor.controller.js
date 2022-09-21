@@ -3,6 +3,7 @@ const consumidorCtrl= {};
 const Consumidor = require('../models/consumidor.model');
 const bcrypt = require('bcrypt');
 const funciones = require('../helpers/functions.helpers');
+const jwt = require('jsonwebtoken');
 
 consumidorCtrl.listarConsumidores = async(req,res)=>{
     const consumidores = await Consumidor.find();
@@ -47,6 +48,43 @@ consumidorCtrl.buscarConsumidor = async(req, res)=>{
     }
     catch{
         res.status(404);
+    }
+}
+
+consumidorCtrl.login= async(req, res)=>{
+    try{
+        const {contrasena, correo } = req.body;
+        
+        if(!(contrasena || correo)){
+            return res.status(400).send("Debe llenar todos los campos");
+        }
+        const user = await Consumidor.findOne({correo});
+
+        if(!user) return res.status(401).send('Error, correo electrónico no existente');
+
+        if(user.activo == false){
+            return res.status(403).send('Usuario Baneado');
+        }
+
+        if(user &&(await bcrypt.compare(contrasena, user.contrasena))){
+            const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'test');
+            console.log(token);   
+            res.send({message: 'estas logeado'})
+        }
+    }
+    catch(err){
+        res.send({message: 'Algo hiciste mal ' + err});
+        console.log(err);
+    }
+}
+
+consumidorCtrl.banear = async(req,res)=>{
+    try{
+        await Consumidor.findByIdAndUpdate(req.params.id,{ $set: {activo: false } });
+        res.json({status: 'Consumidor baneado'})
+    }
+    catch(err){
+        res.send({message:  'ha ocurrido un error de '+ err});
     }
 }
 

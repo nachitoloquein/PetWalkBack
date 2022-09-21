@@ -17,6 +17,6 @@ app.use("/api/trabajador",require('./routes/trabajador.routes'));
 app.use("/api/comuna",require('./routes/comuna.routes'));
 app.use("/api/consumidor",require('./routes/consumidor.routes'));
 //Exportamos el archivo
-app.use('/files', express.static(path.resolve('uploads')));
+app.use('/files', express.static('files'));
 
 module.exports = app;
