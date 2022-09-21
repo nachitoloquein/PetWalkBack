@@ -5,9 +5,9 @@ Content-Type: application/json
 {
     "nombre": "ssadada",
     "apellido": "Vedsdadda",
-    "comuna": "La Pintana",
+    "comuna": "Calera de Tango",
     "telefono": "595959",
-    "correo": "otros7@gmail.com",
+    "correo": "otros8@gmail.com",
     "contrasena": "123456",
     "direccion": "puticlub",
     "fechaNacimiento": "kcyoxd"
