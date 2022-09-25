@@ -17,7 +17,7 @@ Content-Type: application/json
 GET http://localhost:4000/api/consumidor
 
 ###
-GET http://localhost:4000/api/consumidor/632513a0d9f2894092a1c96e
+GET http://localhost:4000/api/consumidor/632b786701a94b5755fa9901
 
 ###
 PATCH http://localhost:4000/api/consumidor/banear/632b68b72c9b54ba862204c5

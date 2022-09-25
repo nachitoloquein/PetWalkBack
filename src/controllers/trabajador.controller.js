@@ -1,7 +1,8 @@
 const trabajadorCtrl = {}
 
 const Trabajador = require('../models/trabajador.model');
-const funciones = require('../helpers/functions.helpers')
+const funciones = require('../helpers/functions.helpers');
+const bcrypt = require('bcrypt');
 
 trabajadorCtrl.listarSolicitud = async(req,res)=>{
     const solicitudes = await Trabajador.find({solicitudPendiente: true});
