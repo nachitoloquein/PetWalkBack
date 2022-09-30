@@ -8,7 +8,7 @@ const adminSchema = new Schema({
     telefono: {type: String, required: true},
     correo: {type: String, required: true},
     contrasena: {type: String, required: true},
-    activo: {type: Boolean, required: true, default: false}
+    activo: {type: Boolean, required: true, default: true}
 },{
     versionKey: false
 })
