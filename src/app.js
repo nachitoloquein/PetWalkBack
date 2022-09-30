@@ -16,6 +16,7 @@ app.use(express.urlencoded({extended:false}));
 app.use("/api/trabajador",require('./routes/trabajador.routes'));
 app.use("/api/comuna",require('./routes/comuna.routes'));
 app.use("/api/consumidor",require('./routes/consumidor.routes'));
+app.use("/api/admin",require('./routes/admin.routes'));
 //Exportamos el archivo
 app.use('/files', express.static('files'));
 

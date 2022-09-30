@@ -1,0 +1,21 @@
+###
+POST http://localhost:4000/api/admin
+Content-Type: application/json
+
+{
+    "nombre": "ssadada",
+    "apellido": "Vedsdadda",
+    "comuna": "Calera de Tango",
+    "telefono": "595959",
+    "correo": "otros8@gmail.com",
+    "contrasena": "123456"
+}
+
+###
+POST http://localhost:4000/api/admin/login
+Content-Type: application/json
+
+{
+    "correo": "otros8@gmail.com",
+    "contrasena": "123456"
+}

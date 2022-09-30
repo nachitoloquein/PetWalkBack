@@ -1,7 +1,9 @@
 const adminCtrl = {}
 
 const Admin = require('../models/admin.model');
-const funciones = require('../helpers/functions.helpers')
+const funciones = require('../helpers/functions.helpers');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 adminCtrl.add= async(req,res)=>{
     try{
@@ -53,7 +55,10 @@ adminCtrl.login= async(req, res)=>{
         if(user &&(await bcrypt.compare(contrasena, user.contrasena))){
             const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'test');
             console.log(token);   
-            res.send({message: 'estas logeado'})
+            res.send({message: 'estas logeado'});
+        }
+        else{
+            res.status(401).send('Usuario inválido');
         }
     }
     catch(err){
