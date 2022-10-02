@@ -12,12 +12,15 @@ Content-Type: multipart/form-data
     "nombre": "ssadada",
     "apellido": "Vedsdadda",
     "comuna": "La Pintana",
+    "solicitudPendiente": true, 
     "genero": "Masculino",
     "telefono": "595959",
-    "correo": "jaja@gmail.com",
+    "correo": "alexisduoc01@gmail.com",
     "contrasena": "123456",
     "rut": "111111-1",
-    "direccion": "puticlub"
+    "direccion": "mi casa",
+    "activo": true,
+    "fechaNacimiento": "24-04-2001",
 }
 
 ###

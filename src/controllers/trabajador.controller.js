@@ -3,6 +3,7 @@ const trabajadorCtrl = {}
 const Trabajador = require('../models/trabajador.model');
 const funciones = require('../helpers/functions.helpers');
 const bcrypt = require('bcrypt');
+const email = require('../config/mail')
 
 trabajadorCtrl.listarSolicitud = async(req,res)=>{
     const solicitudes = await Trabajador.find({solicitudPendiente: true});
@@ -38,7 +39,8 @@ catch(err){
 trabajadorCtrl.aceptar = async(req, res)=>{
     try{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: true , solicitudPendiente: false } });
-        
+        // const mail = Trabajador.findById(req.params.id)
+        email.sendEmail()
         res.json({status: 'Trabajador habilitado'})
     }
     catch(err){
