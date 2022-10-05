@@ -20,7 +20,7 @@ try{
      }
     encryptedPassword = await bcrypt.hash(contrasena, 10);
     const newTrabajador = {nombre: funciones.capitalizar(nombre), apellido: funciones.capitalizar(apellido), comuna, genero, telefono, correo, contrasena: encryptedPassword, rut, direccion, fechaNacimiento, documentos: paths};
-    if (newTrabajador){
+    if (newTrabajador && newTrabajador.documentos.length == 3){
         const newSolicitud = new Trabajador(newTrabajador);
         await newSolicitud.save();
         res.send({message: 'Solicitud creada', newSolicitud});
@@ -58,7 +58,7 @@ trabajadorCtrl.rechazar = async(req, res)=>{
 }
 
 trabajadorCtrl.listarTrabajadores = async(req,res)=>{
-    const trabajadores = await Trabajador.find();
+    const trabajadores = await Trabajador.find({solicitudPendiente: false});
     res.json(trabajadores);
 }
 
@@ -93,6 +93,16 @@ trabajadorCtrl.banear = async(req,res)=>{
     try{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: false } });
         res.json({status: 'Trabajador baneado'})
+    }
+    catch(err){
+        res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
+trabajadorCtrl.activar = async(req,res)=>{
+    try{
+        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: true } });
+        res.json({status: 'Trabajador activado'})
     }
     catch(err){
         res.send({message:  'ha ocurrido un error de '+ err});
