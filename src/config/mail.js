@@ -1,4 +1,5 @@
 const nodemailer =require('nodemailer');
+const html1 = require('../Template/Nuevo_mensaje.html');
 
 const createTrans = () => {
   const transport = nodemailer.createTransport({
@@ -14,16 +15,14 @@ const createTrans = () => {
   return transport;
 }
 
-const sendEmail = async () =>{
+
+const sendEmail = async (user) =>{
   const transporter = createTrans()
-  const activo = true
   const info  = await transporter.sendMail({
     from: '"Su cuenta a sido activada" <petwalk.petsolutions@gmail.com>', 
-    to: `luisrojasborquez@gmail.com`, 
-    subject: `Hola  tu cuenta de PetWalk fue ${activo ? "Activada": "Denegada"}`, 
-    html: `
-    <img src= "/logo">
-    `, 
+    to: `${user.correo}`, 
+    subject: `Hola ${user.nombre} tu cuenta de PetWalk fue ${user.activo ? "Activada": "Denegada"}`, 
+    html: html1, 
   });
   console.log('mensaje email: %s', info.messageId)
 
@@ -32,4 +31,4 @@ const sendEmail = async () =>{
 
 
 
-exports.sendEmail = ()  => sendEmail()
+exports.sendEmail = (user)  => sendEmail(user)

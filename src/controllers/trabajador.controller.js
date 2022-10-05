@@ -39,8 +39,9 @@ catch(err){
 trabajadorCtrl.aceptar = async(req, res)=>{
     try{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: true , solicitudPendiente: false } });
-        // const mail = Trabajador.findById(req.params.id)
-        email.sendEmail()
+        // se envia correo
+        const user = await Trabajador.findById(req.params.id)
+        email.sendEmail(user)
         res.json({status: 'Trabajador habilitado'})
     }
     catch(err){
@@ -51,7 +52,9 @@ trabajadorCtrl.aceptar = async(req, res)=>{
 trabajadorCtrl.rechazar = async(req, res)=>{
     try{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: false , solicitudPendiente: false } });
-        
+    // se envia correo
+        const user = await Trabajador.findById(req.params.id)
+        email.sendEmail(user)
         res.json({status: 'Trabajador rechazado'})
     }
     catch(err){
