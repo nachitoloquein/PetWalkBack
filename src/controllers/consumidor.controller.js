@@ -90,4 +90,14 @@ consumidorCtrl.banear = async(req,res)=>{
     }
 }
 
+consumidorCtrl.activar = async(req,res)=>{
+    try{
+        await Consumidor.findByIdAndUpdate(req.params.id,{ $set: {activo: true } });
+        res.json({status: 'Consumidor activado'})
+    }
+    catch(err){
+        res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
 module.exports= consumidorCtrl;
