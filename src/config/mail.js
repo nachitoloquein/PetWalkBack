@@ -1,5 +1,5 @@
 const nodemailer =require('nodemailer');
-const html1 = require('../Template/Nuevo_mensaje.html');
+const html1 = require('../Template/mail.template');
 
 const createTrans = () => {
   const transport = nodemailer.createTransport({
