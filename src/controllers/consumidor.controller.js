@@ -5,6 +5,7 @@ const Trabajador = require('../models/trabajador.model')
 const bcrypt = require('bcrypt');
 const funciones = require('../helpers/functions.helpers');
 const jwt = require('jsonwebtoken');
+const transporter = require('../config/mail.config');
 
 consumidorCtrl.listarConsumidores = async(req,res)=>{
     const consumidores = await Consumidor.find();
@@ -29,6 +30,7 @@ consumidorCtrl.Registro = async(req, res)=>{
         if (newConsumidor){
             const newSolicitud = new Consumidor(newConsumidor);
             await newSolicitud.save();
+            transporter.sendEmailAdmin(newSolicitud);
             res.send({message: 'Solicitud creada', newSolicitud});
         }
         else{
@@ -83,6 +85,8 @@ consumidorCtrl.login= async(req, res)=>{
 consumidorCtrl.banear = async(req,res)=>{
     try{
         await Consumidor.findByIdAndUpdate(req.params.id,{ $set: {activo: false } });
+        const user = await Consumidor.findById(req.params.id);
+        transporter.sendEmailAdmin(user);
         res.json({status: 'Consumidor baneado'})
     }
     catch(err){
@@ -93,6 +97,8 @@ consumidorCtrl.banear = async(req,res)=>{
 consumidorCtrl.activar = async(req,res)=>{
     try{
         await Consumidor.findByIdAndUpdate(req.params.id,{ $set: {activo: true } });
+        const user = await Consumidor.findById(req.params.id);
+        transporter.sendEmailAdmin(user);
         res.json({status: 'Consumidor activado'})
     }
     catch(err){

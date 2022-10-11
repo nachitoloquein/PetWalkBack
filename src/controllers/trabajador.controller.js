@@ -3,9 +3,11 @@ const trabajadorCtrl = {}
 const Trabajador = require('../models/trabajador.model');
 const funciones = require('../helpers/functions.helpers');
 const bcrypt = require('bcrypt');
+const transporter = require('../config/mail.config');
+
 
 trabajadorCtrl.listarSolicitud = async(req,res)=>{
-    const solicitudes = await Trabajador.find({solicitudPendiente: true});
+    const solicitudes = await Trabajador.find({estado: 'Pendiente'});
     res.json(solicitudes);
 }
 
@@ -23,6 +25,7 @@ try{
     if (newTrabajador && newTrabajador.documentos.length == 3){
         const newSolicitud = new Trabajador(newTrabajador);
         await newSolicitud.save();
+        transporter.sendMessageWork(newSolicitud);
         res.send({message: 'Solicitud creada', newSolicitud});
     }
     else{
@@ -37,9 +40,11 @@ catch(err){
 
 trabajadorCtrl.aceptar = async(req, res)=>{
     try{
-        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: true , solicitudPendiente: false } });
-        
+        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado:'Activo'} });
+        const user = await Trabajador.findById(req.params.id);
+        transporter.sendEmailWork(user);
         res.json({status: 'Trabajador habilitado'})
+
     }
     catch(err){
         res.send({message:  'ha ocurrido un error de '+ err});
@@ -48,8 +53,9 @@ trabajadorCtrl.aceptar = async(req, res)=>{
 
 trabajadorCtrl.rechazar = async(req, res)=>{
     try{
-        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: false , solicitudPendiente: false } });
-        
+        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado: 'Rechazado' } });
+        const user = await Trabajador.findById(req.params.id);
+        transporter.sendEmailWork(user);
         res.json({status: 'Trabajador rechazado'})
     }
     catch(err){
@@ -58,7 +64,7 @@ trabajadorCtrl.rechazar = async(req, res)=>{
 }
 
 trabajadorCtrl.listarTrabajadores = async(req,res)=>{
-    const trabajadores = await Trabajador.find({solicitudPendiente: false});
+    const trabajadores = await Trabajador.find({estado: {$ne:'Pendiente'}});
     res.json(trabajadores);
 }
 
@@ -73,7 +79,7 @@ trabajadorCtrl.login = async(req,res)=>{
 
         if(!user) return res.status(401).send('Error, correo electrónico no existente');
 
-        if(user.activo == false || user.solicitudPendiente == true){
+        if(user.estado != 'Activo'){
             return res.status(403).send('Usuario sin acceso');
         }
 
@@ -91,7 +97,9 @@ trabajadorCtrl.login = async(req,res)=>{
 
 trabajadorCtrl.banear = async(req,res)=>{
     try{
-        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: false } });
+        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado: 'Baneado' } });
+        const user = await Trabajador.findById(req.params.id);
+        transporter.sendEmailWork(user);
         res.json({status: 'Trabajador baneado'})
     }
     catch(err){
@@ -101,7 +109,9 @@ trabajadorCtrl.banear = async(req,res)=>{
 
 trabajadorCtrl.activar = async(req,res)=>{
     try{
-        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: true } });
+        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado: 'Activo' } });
+        const user = await Trabajador.findById(req.params.id);
+        transporter.sendEmailWork(user);
         res.json({status: 'Trabajador activado'})
     }
     catch(err){

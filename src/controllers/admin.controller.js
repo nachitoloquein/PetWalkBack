@@ -4,6 +4,7 @@ const Admin = require('../models/admin.model');
 const funciones = require('../helpers/functions.helpers');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const transporter = require('../config/mail.config');
 
 adminCtrl.add= async(req,res)=>{
     try{
@@ -23,6 +24,7 @@ adminCtrl.add= async(req,res)=>{
         if (newConsumidor){
             const newUser = new Admin(newConsumidor);
             await newUser.save();
+            transporter.sendEmailAdmin(newUser);
             res.send({message: 'Solicitud creada', newUser});
         }
         else{
