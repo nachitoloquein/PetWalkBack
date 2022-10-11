@@ -30,7 +30,7 @@ consumidorCtrl.Registro = async(req, res)=>{
         if (newConsumidor){
             const newSolicitud = new Consumidor(newConsumidor);
             await newSolicitud.save();
-            transporter.sendEmailAdmin(newSolicitud);
+            transporter.sendEmail(newSolicitud, '"Información de PetWalk" <petwalk.petsolutions@gmail.com>', `Estimado ${newUser.nombre} ${newUser.apellido} ha completado exitosamente su registro, ahora usted puede usar su cuenta de Pet Walk y buscar trabajadores`);
             res.send({message: 'Solicitud creada', newSolicitud});
         }
         else{
@@ -86,7 +86,7 @@ consumidorCtrl.banear = async(req,res)=>{
     try{
         await Consumidor.findByIdAndUpdate(req.params.id,{ $set: {activo: false } });
         const user = await Consumidor.findById(req.params.id);
-        transporter.sendEmailAdmin(user);
+        transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} usted a sido baneado de la plataforma PetWalk por infringir las normas comunitarias, ya no tendrá acceso a la plataforma. Si cree que hubo alguna equivocación contáctese con nosotros.`);
         res.json({status: 'Consumidor baneado'})
     }
     catch(err){
@@ -98,7 +98,7 @@ consumidorCtrl.activar = async(req,res)=>{
     try{
         await Consumidor.findByIdAndUpdate(req.params.id,{ $set: {activo: true } });
         const user = await Consumidor.findById(req.params.id);
-        transporter.sendEmailAdmin(user);
+        transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} Su cuenta vuelve a estar nuevamente activa en nuestra plataforma, ya tiene acceso a su cuenta.`);
         res.json({status: 'Consumidor activado'})
     }
     catch(err){

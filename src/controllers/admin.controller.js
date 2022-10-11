@@ -24,7 +24,7 @@ adminCtrl.add= async(req,res)=>{
         if (newConsumidor){
             const newUser = new Admin(newConsumidor);
             await newUser.save();
-            transporter.sendEmailAdmin(newUser);
+            transporter.sendEmail(newUser,`Estimado ${newUser.nombre} ${newUser.apellido} ha completado exitosamente su registro`);
             res.send({message: 'Solicitud creada', newUser});
         }
         else{

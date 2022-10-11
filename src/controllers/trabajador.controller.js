@@ -25,7 +25,7 @@ try{
     if (newTrabajador && newTrabajador.documentos.length == 3){
         const newSolicitud = new Trabajador(newTrabajador);
         await newSolicitud.save();
-        transporter.sendMessageWork(newSolicitud);
+        transporter.sendEmail(newSolicitud, `Estimado ${newSolicitud.nombre} ${newSolicitud.apellido} Su solicitud fue realizada correctamente, nuestro equipo de administración dispone de 2 días hábiles para darle respuesta.`);
         res.send({message: 'Solicitud creada', newSolicitud});
     }
     else{
@@ -42,7 +42,7 @@ trabajadorCtrl.aceptar = async(req, res)=>{
     try{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado:'Activo'} });
         const user = await Trabajador.findById(req.params.id);
-        transporter.sendEmailWork(user);
+        transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} su solicitud a sido aprobada por nuestros administradores, ya puede trabajar en nuestra plataforma.`);
         res.json({status: 'Trabajador habilitado'})
 
     }
@@ -55,7 +55,7 @@ trabajadorCtrl.rechazar = async(req, res)=>{
     try{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado: 'Rechazado' } });
         const user = await Trabajador.findById(req.params.id);
-        transporter.sendEmailWork(user);
+        transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} su solicitud a sido rechazada por nuestro panel administrativo ya que presenta algunas incongruencias respecto la información que usted nos otorgó.`);
         res.json({status: 'Trabajador rechazado'})
     }
     catch(err){
@@ -99,7 +99,7 @@ trabajadorCtrl.banear = async(req,res)=>{
     try{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado: 'Baneado' } });
         const user = await Trabajador.findById(req.params.id);
-        transporter.sendEmailWork(user);
+        transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} Hemos detectado que está infringiendo las normas de nuestra plataforma, su cuenta quedará desactivada de forma indefinida, si cree que hubo algún error contáctese con nosotros.`);
         res.json({status: 'Trabajador baneado'})
     }
     catch(err){
@@ -111,7 +111,7 @@ trabajadorCtrl.activar = async(req,res)=>{
     try{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado: 'Activo' } });
         const user = await Trabajador.findById(req.params.id);
-        transporter.sendEmailWork(user);
+        transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} su cuenta vuelve a estar activa nuevamente, ya tiene acceso a la plataforma.`);
         res.json({status: 'Trabajador activado'})
     }
     catch(err){
