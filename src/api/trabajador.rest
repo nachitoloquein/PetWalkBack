@@ -25,3 +25,12 @@ PATCH http://localhost:4000/api/trabajador/aceptar/631be3f2d530beab34d49bce
 
 ###
 PATCH http://localhost:4000/api/trabajador/rechazar/631be3f2d530beab34d49bce
+
+###
+POST http://localhost:4000/api/trabajador/login
+Content-Type: application/json
+
+{
+    "correo": "i.sallorenzo@duocuc.cl",
+    "contrasena": "123456"
+}

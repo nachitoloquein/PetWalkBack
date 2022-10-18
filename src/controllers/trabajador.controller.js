@@ -4,6 +4,8 @@ const Trabajador = require('../models/trabajador.model');
 const funciones = require('../helpers/functions.helpers');
 const bcrypt = require('bcrypt');
 const transporter = require('../config/mail.config');
+const jwt = require('jsonwebtoken')
+
 
 
 trabajadorCtrl.listarSolicitud = async(req,res)=>{

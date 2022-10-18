@@ -1,5 +1,5 @@
 const consumidorCtrl= {};
-
+const {crearBilletera} = require('./billetera.controller');
 const Consumidor = require('../models/consumidor.model');
 const Trabajador = require('../models/trabajador.model')
 const bcrypt = require('bcrypt');
@@ -30,7 +30,8 @@ consumidorCtrl.Registro = async(req, res)=>{
         if (newConsumidor){
             const newSolicitud = new Consumidor(newConsumidor);
             await newSolicitud.save();
-            transporter.sendEmail(newSolicitud, '"Información de PetWalk" <petwalk.petsolutions@gmail.com>', `Estimado ${newUser.nombre} ${newUser.apellido} ha completado exitosamente su registro, ahora usted puede usar su cuenta de Pet Walk y buscar trabajadores`);
+            transporter.sendEmail(newSolicitud, '"Información de PetWalk" <petwalk.petsolutions@gmail.com>', `Estimado ${newSolicitud.nombre} ${newSolicitud.apellido} ha completado exitosamente su registro, ahora usted puede usar su cuenta de Pet Walk y buscar trabajadores`);
+            crearBilletera(newSolicitud._id);
             res.send({message: 'Solicitud creada', newSolicitud});
         }
         else{

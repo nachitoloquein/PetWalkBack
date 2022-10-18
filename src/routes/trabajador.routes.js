@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const storage = require('../libs/multer.lib')
+const storage = require('../libs/multer.lib');
 
 const trabajadorCtrl = require('../controllers/trabajador.controller');
 

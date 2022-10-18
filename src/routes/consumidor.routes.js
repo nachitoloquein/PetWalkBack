@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const router = Router();
-
 const consumidorCtrl = require('../controllers/consumidor.controller');
 
 router.get('/', consumidorCtrl.listarConsumidores);
