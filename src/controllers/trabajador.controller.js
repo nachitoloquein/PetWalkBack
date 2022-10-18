@@ -84,6 +84,9 @@ trabajadorCtrl.login = async(req,res)=>{
         if(user.estado != 'Activo'){
             return res.status(403).send('Usuario sin acceso');
         }
+        if(!(await bcrypt.compare(contrasena, user.contrasena))){
+            return res.status(400).send("Contraseña equivocada");
+        }
 
         if(user &&(await bcrypt.compare(contrasena, user.contrasena))){
             const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'test');
