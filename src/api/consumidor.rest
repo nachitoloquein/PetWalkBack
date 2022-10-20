@@ -30,6 +30,6 @@ POST http://localhost:4000/api/consumidor/login
 Content-Type: application/json
 
 {
-    "correo": "otros7@gmail.com",
+    "correo": "elnachoescachondo@gmail.com",
     "contrasena": "123456"
 }

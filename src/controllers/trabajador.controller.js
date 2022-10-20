@@ -89,9 +89,8 @@ trabajadorCtrl.login = async(req,res)=>{
         }
 
         if(user &&(await bcrypt.compare(contrasena, user.contrasena))){
-            const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'test');
-            console.log(token);   
-            res.send({message: 'estas logeado'})
+            const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'trabajador');
+            res.send({token})
         }
     }
     catch(err){

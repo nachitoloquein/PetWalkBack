@@ -9,7 +9,7 @@ async function verificarTrabajador(req, res, next) {
 			return res.status(401).send('Unauhtorized Request');
 		}
 
-		const payload = await jwt.verify(token, 'secretkey');
+		const payload = await jwt.verify(token, 'trabajador');
 		if (!payload) {
 			return res.status(401).send('Unauhtorized Request');
 		}
