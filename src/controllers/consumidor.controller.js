@@ -110,4 +110,13 @@ consumidorCtrl.activar = async(req,res)=>{
     }
 }
 
+consumidorCtrl.mostrarConsumidorID = async(req, res)=>{
+    try{
+    const consumidor = Consumidor.findById(req.params.id);
+    res.send(consumidor);
+    }catch{
+        return res.status(404);
+    }
+}
+
 module.exports= consumidorCtrl;
