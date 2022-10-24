@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const email = require('../config/mail')
 
 trabajadorCtrl.listarSolicitud = async(req,res)=>{
-    const solicitudes = await Trabajador.find({solicitudPendiente: true});
+    const solicitudes = await Trabajador.find({estado: 'Pendiente'});
     res.json(solicitudes);
 }
 
@@ -21,9 +21,10 @@ try{
      }
     encryptedPassword = await bcrypt.hash(contrasena, 10);
     const newTrabajador = {nombre: funciones.capitalizar(nombre), apellido: funciones.capitalizar(apellido), comuna, genero, telefono, correo, contrasena: encryptedPassword, rut, direccion, fechaNacimiento, documentos: paths};
-    if (newTrabajador){
+    if (newTrabajador && newTrabajador.documentos.length == 3){
         const newSolicitud = new Trabajador(newTrabajador);
         await newSolicitud.save();
+        transporter.sendEmail(newSolicitud, `Estimado ${newSolicitud.nombre} ${newSolicitud.apellido} Su solicitud fue realizada correctamente, nuestro equipo de administración dispone de 2 días hábiles para darle respuesta.`);
         res.send({message: 'Solicitud creada', newSolicitud});
     }
     else{
@@ -43,6 +44,7 @@ trabajadorCtrl.aceptar = async(req, res)=>{
         const user = await Trabajador.findById(req.params.id)
         email.sendEmail(user)
         res.json({status: 'Trabajador habilitado'})
+
     }
     catch(err){
         res.send({message:  'ha ocurrido un error de '+ err});
@@ -63,7 +65,7 @@ trabajadorCtrl.rechazar = async(req, res)=>{
 }
 
 trabajadorCtrl.listarTrabajadores = async(req,res)=>{
-    const trabajadores = await Trabajador.find();
+    const trabajadores = await Trabajador.find({estado: {$ne:'Pendiente'}});
     res.json(trabajadores);
 }
 
@@ -78,14 +80,16 @@ trabajadorCtrl.login = async(req,res)=>{
 
         if(!user) return res.status(401).send('Error, correo electrónico no existente');
 
-        if(user.activo == false || user.solicitudPendiente == true){
+        if(user.estado != 'Activo'){
             return res.status(403).send('Usuario sin acceso');
+        }
+        if(!(await bcrypt.compare(contrasena, user.contrasena))){
+            return res.status(400).send("Contraseña equivocada");
         }
 
         if(user &&(await bcrypt.compare(contrasena, user.contrasena))){
-            const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'test');
-            console.log(token);   
-            res.send({message: 'estas logeado'})
+            const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'trabajador');
+            res.send({token})
         }
     }
     catch(err){
@@ -96,11 +100,34 @@ trabajadorCtrl.login = async(req,res)=>{
 
 trabajadorCtrl.banear = async(req,res)=>{
     try{
-        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {activo: false } });
+        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado: 'Baneado' } });
+        const user = await Trabajador.findById(req.params.id);
+        transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} Hemos detectado que está infringiendo las normas de nuestra plataforma, su cuenta quedará desactivada de forma indefinida, si cree que hubo algún error contáctese con nosotros.`);
         res.json({status: 'Trabajador baneado'})
     }
     catch(err){
         res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
+trabajadorCtrl.activar = async(req,res)=>{
+    try{
+        await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado: 'Activo' } });
+        const user = await Trabajador.findById(req.params.id);
+        transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} su cuenta vuelve a estar activa nuevamente, ya tiene acceso a la plataforma.`);
+        res.json({status: 'Trabajador activado'})
+    }
+    catch(err){
+        res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
+trabajadorCtrl.mostrarTrabajadorID = async(req, res)=>{
+    try{
+    const trabajador = Trabajador.findById(req.params.id);
+    res.send(trabajador);
+    }catch{
+        return res.status(404);
     }
 }
 

@@ -7,7 +7,7 @@ Content-Type: application/json
     "apellido": "Vedsdadda",
     "comuna": "Calera de Tango",
     "telefono": "595959",
-    "correo": "otros8@gmail.com",
+    "correo": "elnachoescachondo@gmail.com",
     "contrasena": "123456",
     "direccion": "puticlub",
     "fechaNacimiento": "kcyoxd"
@@ -20,13 +20,16 @@ GET http://localhost:4000/api/consumidor
 GET http://localhost:4000/api/consumidor/632b786701a94b5755fa9901
 
 ###
-PATCH http://localhost:4000/api/consumidor/banear/632b68b72c9b54ba862204c5
+PATCH http://localhost:4000/api/consumidor/banear/6344c4153f3dc33d14153c9e
+
+###
+PATCH http://localhost:4000/api/consumidor/activar/6344c4153f3dc33d14153c9e
 
 ###
 POST http://localhost:4000/api/consumidor/login
 Content-Type: application/json
 
 {
-    "correo": "otros7@gmail.com",
+    "correo": "elnachoescachondo@gmail.com",
     "contrasena": "123456"
 }

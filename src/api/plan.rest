@@ -1,0 +1,27 @@
+###
+GET http://localhost:4000/api/plan
+
+###
+POST http://localhost:4000/api/plan
+Content-Type: application/json
+
+{
+    "costo": "5000",
+    "encabezado": "Oferton",
+    "descripcion": "Lleva 1000 coins en 5 lukas",
+    "cantidadCoins": "1000"
+}
+
+###
+PUT http://localhost:4000/api/plan/635053010765deb4901281ef
+Content-Type: application/json
+
+{
+    "costo": "6000",
+    "encabezado": "Oferton",
+    "descripcion": "Lleva 1000 coins en 6 lukas",
+    "cantidadCoins": "1000"
+}
+
+###
+DELETE  http://localhost:4000/api/plan/635053010765deb4901281ef

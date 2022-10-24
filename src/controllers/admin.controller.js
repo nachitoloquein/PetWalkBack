@@ -4,6 +4,7 @@ const Admin = require('../models/admin.model');
 const funciones = require('../helpers/functions.helpers');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const transporter = require('../config/mail.config');
 
 adminCtrl.add= async(req,res)=>{
     try{
@@ -23,6 +24,7 @@ adminCtrl.add= async(req,res)=>{
         if (newConsumidor){
             const newUser = new Admin(newConsumidor);
             await newUser.save();
+            transporter.sendEmail(newUser,`Estimado ${newUser.nombre} ${newUser.apellido} ha completado exitosamente su registro`);
             res.send({message: 'Solicitud creada', newUser});
         }
         else{
@@ -35,7 +37,6 @@ adminCtrl.add= async(req,res)=>{
         console.log(err);
     }
 }
-
 
 adminCtrl.login= async(req, res)=>{
     try{
@@ -54,8 +55,7 @@ adminCtrl.login= async(req, res)=>{
 
         if(user &&(await bcrypt.compare(contrasena, user.contrasena))){
             const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'test');
-            console.log(token);   
-            res.send({message: 'estas logeado'});
+            res.send({token});
         }
         else{
             res.status(401).send('Usuario inválido');

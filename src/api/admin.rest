@@ -3,11 +3,11 @@ POST http://localhost:4000/api/admin
 Content-Type: application/json
 
 {
-    "nombre": "ssadada",
-    "apellido": "Vedsdadda",
+    "nombre": "ignacio",
+    "apellido": "sallorenzo",
     "comuna": "Calera de Tango",
     "telefono": "595959",
-    "correo": "otros8@gmail.com",
+    "correo": "i.sallorenzo@duocuc.cl",
     "contrasena": "123456"
 }
 
