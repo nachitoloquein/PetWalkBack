@@ -6,5 +6,6 @@ router.get('/', planCtrl.listarPlanes);
 router.post('/', planCtrl.crearPlan);
 router.put('/:id', planCtrl.modificarPlan);
 router.delete('/:id', planCtrl.eliminarPlan);
+router.patch('/:id', planCtrl.desactivarPlan);
 
 module.exports = router;

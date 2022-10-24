@@ -1,9 +1,11 @@
 const planCtrl = {}
 const Plan = require('../models/plan.model');
+const Descuento = require('../models/descuento.model');
 
 planCtrl.listarPlanes = async(req,res)=>{
-    const planes = await Plan.find();
-    res.json(planes);
+    /* const descuento = await Descuento.find({activo:true});
+    const sinDescuentos = await Plan.find({id: {$ne: descuento.idPlan}});
+    res.json(sinDescuentos); */
 }
 
 planCtrl.crearPlan = async(req,res)=>{
@@ -36,5 +38,22 @@ planCtrl.modificarPlan = async(req,res)=>{
         res.send({message: `error de ${e}`});
     }
 }
+
+planCtrl.desactivarPlan = async(req,res)=>{
+    try{
+        await Plan.findByIdAndUpdate(req.params.id,{ $set: {activo: false } });
+        res.json({status: 'Plan desactivado'})
+    }
+    catch(err){
+        res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
+/* function verificarNormales(){
+    const descuento = Descuento.find({activo:true});
+    const sinDescuentos = Plan.find({});
+    return sinDescuentos;
+} */
+
 
 module.exports = planCtrl;
