@@ -1,11 +1,29 @@
 const planCtrl = {}
+
 const Plan = require('../models/plan.model');
-const Descuento = require('../models/descuento.model');
+const mongoose = require('mongoose');
 
 planCtrl.listarPlanes = async(req,res)=>{
-    /* const descuento = await Descuento.find({activo:true});
-    const sinDescuentos = await Plan.find({id: {$ne: descuento.idPlan}});
-    res.json(sinDescuentos); */
+    try{
+        const planes = await Plan.find({activo: true});
+        res.json(planes);
+
+    }catch(error){
+        res.send({message: 'error'+ error});
+    }
+}
+
+planCtrl.CrearDescuento = async(req,res)=>{
+    try{
+        const {costoNuevo, fechaTermino} = req.body;
+        await Plan.findByIdAndUpdate(req.params.id, {costoNuevo,fechaTermino});
+        const planSeleccionado = await Plan.findById(req.params.id);
+        const porcentaje = sacarPorcentaje(planSeleccionado.costo,costoNuevo);
+        await Plan.findByIdAndUpdate(req.params.id, {$set: {porcentajeDescuento: '%'+porcentaje, descuentoActivo: true}});
+        res.send({message: 'Descuento creado'});
+    }catch(error){
+        res.send({message: 'error de '+ error})
+    }
 }
 
 planCtrl.crearPlan = async(req,res)=>{
@@ -49,11 +67,10 @@ planCtrl.desactivarPlan = async(req,res)=>{
     }
 }
 
-/* function verificarNormales(){
-    const descuento = Descuento.find({activo:true});
-    const sinDescuentos = Plan.find({});
-    return sinDescuentos;
-} */
+function sacarPorcentaje(valorInicial, valorFinal){
+    const porcentaje = 100-(valorFinal/valorInicial*100);
+    return porcentaje;
+}
 
 
 module.exports = planCtrl;
