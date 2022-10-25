@@ -1,7 +1,6 @@
 const planCtrl = {}
 
 const Plan = require('../models/plan.model');
-const mongoose = require('mongoose');
 
 planCtrl.listarPlanes = async(req,res)=>{
     try{
@@ -83,7 +82,7 @@ planCtrl.DarDeBajaManualDescuento = async(req,res)=>{
 }
 
 planCtrl.DarDeBajaAutomatica = async()=>{
-
+    const planesConDescuento = await Plan.find({descuentoActivo:true});
 }
 
 module.exports = planCtrl;

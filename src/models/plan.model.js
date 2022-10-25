@@ -7,7 +7,7 @@ const planSchema = new Schema({
     cantidadCoins: {type: Number, required: true},
     costoNuevo: {type: Number, required: false},
     porcentajeDescuento: {type: String, required: false},
-    fechaTermino: {type: Date, required: true},
+    fechaTermino: {type: Date, required: false},
     activo: {type: Boolean, required: true, default: true},
     descuentoActivo: {type: Boolean, required: false, default: false}
 },
