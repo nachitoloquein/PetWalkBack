@@ -81,8 +81,20 @@ planCtrl.DarDeBajaManualDescuento = async(req,res)=>{
     }
 }
 
-planCtrl.DarDeBajaAutomatica = async()=>{
+planCtrl.DarDeBajaAutomatica = async ()=>{
     const planesConDescuento = await Plan.find({descuentoActivo:true});
+    for (let plan of planesConDescuento){
+        if(plan.fechaTermino<Date.now()){
+            await Plan.findByIdAndUpdate(plan.id, { $set: {descuentoActivo: false } } )
+            console.log(`el plan ${plan.id} finalizó su oferta`);
+        }
+    }
 }
+
+function timer(){
+    setInterval(planCtrl.DarDeBajaAutomatica, 60000);
+}
+
+timer();
 
 module.exports = planCtrl;

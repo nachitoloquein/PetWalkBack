@@ -13,13 +13,13 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:4000/api/plan/635053010765deb4901281ef
+PUT http://localhost:4000/api/plan/6357432f35482c8d1887eeae
 Content-Type: application/json
 
 {
-    "costo": "6000",
+    "costo": "10000",
     "encabezado": "Oferton",
-    "descripcion": "Lleva 1000 coins en 6 lukas",
+    "descripcion": "Lleva 1000 coins en 10 lukas",
     "cantidadCoins": "1000"
 }
 
@@ -27,7 +27,7 @@ Content-Type: application/json
 DELETE  http://localhost:4000/api/plan/635053010765deb4901281ef
 
 ###
-PUT http://localhost:4000/api/plan/crearDescuento/6356f685f4637d25684aab03
+PUT http://localhost:4000/api/plan/crearDescuento/6357432f35482c8d1887eeae
 Content-Type: application/json
 
 {
