@@ -6,6 +6,7 @@ router.get('/', planCtrl.listarPlanes);
 router.post('/', planCtrl.crearPlan);
 router.put('/:id', planCtrl.modificarPlan);
 router.put('/crearDescuento/:id', planCtrl.CrearDescuento);
+router.patch('/descuento/:id', planCtrl.DarDeBajaManualDescuento);
 router.delete('/:id', planCtrl.eliminarPlan);
 router.patch('/:id', planCtrl.desactivarPlan);
 

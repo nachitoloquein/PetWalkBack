@@ -18,7 +18,6 @@ app.use("/api/comuna",require('./routes/comuna.routes'));
 app.use("/api/consumidor",require('./routes/consumidor.routes'));
 app.use("/api/admin",require('./routes/admin.routes'));
 app.use("/api/plan",require('./routes/plan.routes'));
-app.use("/api/descuento",require('./routes/descuento.routes'));
 
 //Exportamos el archivo
 app.use('/files', express.static('files'));

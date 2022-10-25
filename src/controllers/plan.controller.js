@@ -13,25 +13,12 @@ planCtrl.listarPlanes = async(req,res)=>{
     }
 }
 
-planCtrl.CrearDescuento = async(req,res)=>{
-    try{
-        const {costoNuevo, fechaTermino} = req.body;
-        await Plan.findByIdAndUpdate(req.params.id, {costoNuevo,fechaTermino});
-        const planSeleccionado = await Plan.findById(req.params.id);
-        const porcentaje = sacarPorcentaje(planSeleccionado.costo,costoNuevo);
-        await Plan.findByIdAndUpdate(req.params.id, {$set: {porcentajeDescuento: '%'+porcentaje, descuentoActivo: true}});
-        res.send({message: 'Descuento creado'});
-    }catch(error){
-        res.send({message: 'error de '+ error})
-    }
-}
-
 planCtrl.crearPlan = async(req,res)=>{
     try{
     const {costo, encabezado, descripcion, cantidadCoins} = req.body;
     const newPlan = new Plan({costo, encabezado, descripcion, cantidadCoins});
     await newPlan.save();
-    res.send({message: "plan creado", newPlan});
+    res.status(200).send({message: "plan creado", newPlan});
     }catch(e){
         console.log(e);
         res.status(400).send({message: `error de ${e}`});
@@ -41,7 +28,7 @@ planCtrl.crearPlan = async(req,res)=>{
 planCtrl.eliminarPlan = async(req,res)=>{
     try{
         await Plan.findByIdAndDelete(req.params.id);
-        res.json({status: 'plan eliminado'});
+        res.status(200).send({status: 'plan eliminado'});
     }catch(e){
         console.log(e);
         res.status.send({message: `error de ${e}`});
@@ -51,7 +38,7 @@ planCtrl.eliminarPlan = async(req,res)=>{
 planCtrl.modificarPlan = async(req,res)=>{
     try{
         await Plan.findByIdAndUpdate(req.params.id, req.body);
-        res.json({status: 'plan modificado'});
+        res.status(200).send({status: 'plan modificado'});
     }catch(e){
         res.send({message: `error de ${e}`});
     }
@@ -60,7 +47,7 @@ planCtrl.modificarPlan = async(req,res)=>{
 planCtrl.desactivarPlan = async(req,res)=>{
     try{
         await Plan.findByIdAndUpdate(req.params.id,{ $set: {activo: false } });
-        res.json({status: 'Plan desactivado'})
+        res.status(200).send({status: 'Plan desactivado'})
     }
     catch(err){
         res.send({message:  'ha ocurrido un error de '+ err});
@@ -69,8 +56,34 @@ planCtrl.desactivarPlan = async(req,res)=>{
 
 function sacarPorcentaje(valorInicial, valorFinal){
     const porcentaje = 100-(valorFinal/valorInicial*100);
-    return porcentaje;
+    return Math.round(porcentaje);
 }
 
+planCtrl.CrearDescuento = async(req,res)=>{
+    try{
+        const {costoNuevo, fechaTermino} = req.body;
+        await Plan.findByIdAndUpdate(req.params.id, {costoNuevo,fechaTermino});
+        const planSeleccionado = await Plan.findById(req.params.id);
+        const porcentaje = sacarPorcentaje(planSeleccionado.costo,costoNuevo);
+        await Plan.findByIdAndUpdate(req.params.id, {$set: {porcentajeDescuento: '%'+porcentaje, descuentoActivo: true}});
+        res.status(200).send({message: 'Descuento creado'});
+    }catch(error){
+        res.status(400).send({message: 'error de '+ error})
+    }
+}
+
+planCtrl.DarDeBajaManualDescuento = async(req,res)=>{
+    try{
+        await Plan.findByIdAndUpdate(req.params.id,{ $set: {descuentoActivo: false } });
+        res.status(200).send({status: 'Descuento desactivado'});
+    }
+    catch(err){
+        res.status(400).send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
+planCtrl.DarDeBajaAutomatica = async()=>{
+
+}
 
 module.exports = planCtrl;

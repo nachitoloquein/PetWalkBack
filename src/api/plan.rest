@@ -27,7 +27,7 @@ Content-Type: application/json
 DELETE  http://localhost:4000/api/plan/635053010765deb4901281ef
 
 ###
-PUT http://localhost:4000/api/plan/crearDescuento/6356d8ed77ef1d91f6fda724
+PUT http://localhost:4000/api/plan/crearDescuento/6356f685f4637d25684aab03
 Content-Type: application/json
 
 {
