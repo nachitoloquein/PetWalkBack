@@ -77,7 +77,7 @@ exports.commit = asyncHandler(async function (request, response, next) {
       stepDescription,
       viewData,
     });
-    // se debe cargar el coin aqui
+    // se debe cargar los coins aqui
     return;
   }
   else if (!token && !tbkToken) {//Flujo 2

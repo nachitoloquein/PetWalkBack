@@ -12,7 +12,7 @@ router.use(function (req, res, next) {
   next();
 });
 
-router.get("/create", controller.create);
+router.get("/create/:id", controller.create);
 router.get("/commit", controller.commit);
 router.post("/commit", controller.commit);
 router.post("/status", controller.status);
