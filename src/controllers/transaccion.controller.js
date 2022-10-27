@@ -3,6 +3,9 @@ const asyncHandler = require("../utils/async_handler");
 const plan = require('../models/plan.model');
 
 exports.create = asyncHandler(async function (request, response, next) {
+
+  console.log(listo)
+
   let buyOrder = "petwalk_2022";
   let sessionId = rand();
   let amount = await plan.findOne({costo});;
