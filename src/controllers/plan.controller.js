@@ -53,6 +53,16 @@ planCtrl.desactivarPlan = async(req,res)=>{
     }
 }
 
+planCtrl.activarPlan = async(req,res)=>{
+    try{
+        await Plan.findByIdAndUpdate(req.params.id,{ $set: {activo: true } });
+        res.status(200).send({status: 'Plan activado'})
+    }
+    catch(err){
+        res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
 function sacarPorcentaje(valorInicial, valorFinal){
     const porcentaje = 100-(valorFinal/valorInicial*100);
     return Math.round(porcentaje);
@@ -74,6 +84,16 @@ planCtrl.CrearDescuento = async(req,res)=>{
 planCtrl.DarDeBajaManualDescuento = async(req,res)=>{
     try{
         await Plan.findByIdAndUpdate(req.params.id,{ $set: {descuentoActivo: false } });
+        res.status(200).send({status: 'Descuento desactivado'});
+    }
+    catch(err){
+        res.status(400).send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
+planCtrl.ActivarDescuento = async(req,res)=>{
+    try{
+        await Plan.findByIdAndUpdate(req.params.id,{ $set: {descuentoActivo: true } });
         res.status(200).send({status: 'Descuento desactivado'});
     }
     catch(err){
