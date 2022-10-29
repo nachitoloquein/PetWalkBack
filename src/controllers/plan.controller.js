@@ -4,7 +4,7 @@ const Plan = require('../models/plan.model');
 
 planCtrl.listarPlanes = async(req,res)=>{
     try{
-        const planes = await Plan.find({activo: true});
+        const planes = await Plan.find();
         res.json(planes);
 
     }catch(error){
