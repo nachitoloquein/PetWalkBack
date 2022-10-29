@@ -1,8 +1,15 @@
+CtrlBilletera = {}
+
 const Billetera = require('../models/billeteraConsumidor.model')
 
-async function crearBilletera(id){
+CtrlBilletera.crearBilletera = async(id)=>{
     const newBilletera = new Billetera({idConsumidor: id});
     await newBilletera.save();
 }
 
-module.exports = {crearBilletera}
+CtrlBilletera.mostrarDatos = async(req, res)=>{
+    const billetera = await Billetera.findOne({idConsumidor: req.params.id});
+    res.send(billetera);
+}
+
+module.exports = CtrlBilletera
