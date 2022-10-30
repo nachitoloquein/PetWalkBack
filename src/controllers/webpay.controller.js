@@ -11,7 +11,7 @@ const billetera = require('../models/billeteraConsumidor.model');
 CtrlTransaccion.crearRespuesta=async(req,res)=>{
     try{
         const { costo } = req.body;
-        const ruta = "http://localhost:8101/confirmarPago"
+        const ruta = "http://localhost:8100/confirmarPago"
         const transaccion = await (new WebpayPlus.Transaction())
         const createResponse = await transaccion.create(
             'orden1', 
@@ -19,7 +19,6 @@ CtrlTransaccion.crearRespuesta=async(req,res)=>{
             costo, 
             ruta
         );
-
         res.send(createResponse)
     }catch(e){
         console.log(e);
@@ -28,10 +27,13 @@ CtrlTransaccion.crearRespuesta=async(req,res)=>{
 
 
 CtrlTransaccion.confirmar = async(req,res)=>{
-  let token = req.body.token_ws;
-  const confirm = await (new WebpayPlus.Transaction()).commit(token)
+  const token = req.body.token_ws;
+  const confirm = await (new WebpayPlus.Transaction()).commit(token);
+  console.log(confirm)
+  const monto = confirm.amount;
   if(confirm.response_code = 0){
-    console.log("transaccion aprobada")
+    const coin = await plan.find({costo: monto})
+    // await billetera.findOneAndUpdate({id:req.params.id},{$set: {cantidadCoins:100}})
   }
   else{
     console.log("transaccion fallida")
