@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const consumidorCtrl = require('../controllers/consumidor.controller');
 
+router.get('/consumidorConectado', consumidorCtrl.verificarConsumidor);
 router.get('/', consumidorCtrl.listarConsumidores);
 router.get('/perfil/:id', consumidorCtrl.mostrarConsumidorID);
 router.post('/', consumidorCtrl.Registro);

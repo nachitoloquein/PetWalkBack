@@ -28,3 +28,8 @@ PATCH http://localhost:4000/api/trabajador/aceptar/633de716ac61d21c94b5a6ec
 
 ###
 PATCH http://localhost:4000/api/trabajador/rechazar/633de716ac61d21c94b5a6ec
+
+
+
+###
+GET http://localhost:4000/api/trabajador/perfil/634b4e5cdc7904138011938f

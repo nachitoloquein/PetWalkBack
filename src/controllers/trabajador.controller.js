@@ -123,12 +123,10 @@ trabajadorCtrl.activar = async(req,res)=>{
 }
 
 trabajadorCtrl.mostrarTrabajadorID = async(req, res)=>{
-    try{
-    const trabajador = Trabajador.findById(req.params.id);
-    res.send(trabajador);
-    }catch{
-        return res.status(404);
-    }
+    
+        const trabajador = await Trabajador.findById(req.params.id);
+        res.send(trabajador);
+  
 }
 
 module.exports= trabajadorCtrl;

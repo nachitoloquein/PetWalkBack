@@ -112,10 +112,20 @@ consumidorCtrl.activar = async(req,res)=>{
 
 consumidorCtrl.mostrarConsumidorID = async(req, res)=>{
     try{
-    const consumidor = Consumidor.findById(req.params.id);
+    const consumidor = await Consumidor.findById(req.params.id);
     res.send(consumidor);
     }catch{
         return res.status(404);
+    }
+}
+
+consumidorCtrl.verificarConsumidor = async(req, res)=> {
+    try{
+        let token = req.headers.authorization;
+        const usuario = await jwt.decode(token)
+        res.send(usuario._id);
+    }catch(error){
+        res.status(407).send('No hay usuario conectado')
     }
 }
 

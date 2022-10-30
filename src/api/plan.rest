@@ -6,22 +6,31 @@ POST http://localhost:4000/api/plan
 Content-Type: application/json
 
 {
-    "costo": "5000",
+    "costo": "10000",
     "encabezado": "Oferton",
-    "descripcion": "Lleva 1000 coins en 5 lukas",
-    "cantidadCoins": "1000"
+    "descripcion": "Lleva 10000 coins en 10 mil pesos",
+    "cantidadCoins": "10000"
 }
 
 ###
-PUT http://localhost:4000/api/plan/635053010765deb4901281ef
+PUT http://localhost:4000/api/plan/6357432f35482c8d1887eeae
 Content-Type: application/json
 
 {
-    "costo": "6000",
+    "costo": "10000",
     "encabezado": "Oferton",
-    "descripcion": "Lleva 1000 coins en 6 lukas",
+    "descripcion": "Lleva 1000 coins en 10 lukas",
     "cantidadCoins": "1000"
 }
 
 ###
 DELETE  http://localhost:4000/api/plan/635053010765deb4901281ef
+
+###
+PUT http://localhost:4000/api/plan/crearDescuento/635e98410bdb33aa5bd9a75d
+Content-Type: application/json
+
+{
+    "costoNuevo": "5000",
+    "fechaTermino": "2023/07/17"
+}
