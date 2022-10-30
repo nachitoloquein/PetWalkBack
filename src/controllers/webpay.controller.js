@@ -11,7 +11,7 @@ const billetera = require('../models/billeteraConsumidor.model');
 CtrlTransaccion.crearRespuesta=async(req,res)=>{
     try{
         const { costo } = req.body;
-        const ruta = "http://localhost:8100/billetera"
+        const ruta = "http://localhost:8101/confirmarPago"
         const transaccion = await (new WebpayPlus.Transaction())
         const createResponse = await transaccion.create(
             'orden1', 
@@ -36,7 +36,7 @@ CtrlTransaccion.confirmar = async(req,res)=>{
   else{
     console.log("transaccion fallida")
   }
-  res.send(confirm)
+  res.send(confirm.response_code)
 }
 
 
