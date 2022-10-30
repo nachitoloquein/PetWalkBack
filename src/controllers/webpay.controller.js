@@ -1,20 +1,45 @@
+const { token } = require('morgan');
+
 const CtrlTransaccion = {}
 const WebpayPlus = require('transbank-sdk').WebpayPlus
+
+const plan = require('../models/plan.model');
+const billetera = require('../models/billeteraConsumidor.model');
+
+
 
 CtrlTransaccion.crearRespuesta=async(req,res)=>{
     try{
         const { costo } = req.body;
-        const createResponse = await (new WebpayPlus.Transaction()).create(
+        const ruta = "http://localhost:8100/billetera"
+        const transaccion = await (new WebpayPlus.Transaction())
+        const createResponse = await transaccion.create(
             'orden1', 
             'sesion', 
             costo, 
-            'https://www.facebook.com'
+            ruta
         );
-        res.send(createResponse);
+
+        res.send(createResponse)
     }catch(e){
         console.log(e);
     }
 }
+
+
+CtrlTransaccion.confirmar = async(req,res)=>{
+  let token = req.body.token_ws;
+  const confirm = await (new WebpayPlus.Transaction()).commit(token)
+  if(confirm.response_code = 0){
+    console.log("transaccion aprobada")
+  }
+  else{
+    console.log("transaccion fallida")
+  }
+  res.send(confirm)
+}
+
+
 
 /* 
 exports.create = asyncHandler(async function (request, response, next) {

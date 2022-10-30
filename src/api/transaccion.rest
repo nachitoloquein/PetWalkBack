@@ -1,2 +1,5 @@
 ###
+GET http://localhost:4000/api/transaccion
+
+###
 GET http://localhost:4000/api/transaccion/create/63571a10b6d6475b62a571ba
