@@ -1,2 +1,17 @@
 ###
 GET http://localhost:4000/api/billetera/634e0d918f1504140f4c5bcf
+
+###
+PUT http://localhost:4000/api/billetera/CargarCoinsIdBilletera/635eb96ab21c143715f90911
+Content-Type: application/json
+
+{
+    "monto":1000
+}
+###
+PUT http://localhost:4000/api/billetera/CargarCoinsIdConsumidor/635eb96ab21c143715f9090f
+Content-Type: application/json
+
+{
+    "monto":3000
+}
