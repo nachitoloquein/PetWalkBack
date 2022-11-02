@@ -19,6 +19,7 @@ app.use("/api/admin",require('./routes/admin.routes'));
 app.use("/api/plan",require('./routes/plan.routes'));
 app.use("/api/billetera",require('./routes/billetera.routes'));
 app.use("/api/webpay",require('./routes/webpay.routes'));
+app.use("/api/reporte",require('./routes/reporte.routes'));
 
 //Exportamos el archivo
 app.use('/files', express.static('files'));

@@ -12,4 +12,15 @@ CtrlBilletera.mostrarDatos = async(req, res)=>{
     res.send(billetera);
 }
 
+CtrlBilletera.cargarCoinsIdUsuario = async(req,res)=>{
+    try {
+        const consumidorCoins = await Billetera.find({idConsumidor:req.params.id});
+        const cargaCoins = consumidorCoins[0].monto + req.body.monto;
+        await Billetera.findOneAndUpdate({idConsumidor:req.params.id},{$set: {monto:cargaCoins}})
+        res.status(200).send({status: 'Se cargaron coins correctamente'});
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = CtrlBilletera
