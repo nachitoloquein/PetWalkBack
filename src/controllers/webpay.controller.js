@@ -33,7 +33,7 @@ CtrlTransaccion.confirmar = async(req,res)=>{
   const monto = confirm.amount;
   if(confirm.response_code = 0){
     const coin = await plan.find({costo: monto})
-    // await billetera.findOneAndUpdate({id:req.params.id},{$set: {cantidadCoins:100}})
+    await billetera.findOneAndUpdate({id:req.params.id},{$set: {cantidadCoins:coin.cantidadCoins}})
   }
   else{
     console.log("transaccion fallida")
