@@ -17,7 +17,7 @@ CtrlTransaccion.crearRespuesta=async(req,res)=>{
             'orden1', 
             'sesion', 
             costo, 
-            ruta
+            'http://localhost:4000/api/webpay/res'
         );
         res.send(createResponse)
     }catch(e){
@@ -25,162 +25,17 @@ CtrlTransaccion.crearRespuesta=async(req,res)=>{
     }
 }
 
-
-CtrlTransaccion.confirmar = async(req,res)=>{
-  const token = req.body.token_ws;
-  const confirm = await (new WebpayPlus.Transaction()).commit(token);
-  console.log(confirm)
-  const monto = confirm.amount;
-  if(confirm.response_code = 0){
-    const coin = await plan.find({costo: monto})
-    // await billetera.findOneAndUpdate({id:req.params.id},{$set: {cantidadCoins:100}})
+CtrlTransaccion.verEstado = async(req,res)=>{
+  let token = req.query.token_ws;
+  const commitResponse = await (new WebpayPlus.Transaction()).commit(token);
+  console.log(commitResponse)
+  if(commitResponse.response_code == 0){
+    res.redirect('http://localhost:8100/transaccionBuena');
   }
   else{
-    console.log("transaccion fallida")
+    //no paso
+    res.redirect('http://www.facebook.com');
   }
-  res.send(confirm.response_code)
 }
 
-
-
-/* 
-exports.create = asyncHandler(async function (request, response, next) {
-  let buyOrder = "petwalk_2022";
-  let sessionId = rand();
-  let amount = await plan.findOne({costo});;
-  let returnUrl = "/"
-    request.protocol + "://" + request.get("host") + "/webpay_plus/commit";
-
-  const createResponse = await (new WebpayPlus.Transaction()).create(
-    buyOrder,
-    sessionId,
-    amount,
-    returnUrl
-  );
-
-  let token = createResponse.token;
-  let url = createResponse.url;
-
-  let viewData = {
-    buyOrder,
-    sessionId,
-    amount,
-    returnUrl,
-    token,
-    url,
-  };
-  response.render("webpay_plus/create", {
-    step: "Crear Transacción",
-    stepDescription:
-      "En este paso crearemos la transacción con el objetivo de obtener un identificador unico y " +
-      "poder en el siguiente paso redirigir al Tarjetahabiente hacia el formulario de pago",
-    viewData,
-  });
-});
-
-exports.commit = asyncHandler(async function (request, response, next) {
-  //Flujos:
-  //1. Flujo normal (OK): solo llega token_ws
-  //2. Timeout (más de 10 minutos en el formulario de Transbank): llegan TBK_ID_SESION y TBK_ORDEN_COMPRA
-  //3. Pago abortado (con botón anular compra en el formulario de Webpay): llegan TBK_TOKEN, TBK_ID_SESION, TBK_ORDEN_COMPRA
-  //4. Caso atipico: llega todos token_ws, TBK_TOKEN, TBK_ID_SESION, TBK_ORDEN_COMPRA
-  console.log("================================================================================");
-  console.log(request);
-  console.log("================================================================================");
-  let params = request.method === 'GET' ? request.query : request.body;
-
-  let token = params.token_ws;
-  let tbkToken = params.TBK_TOKEN;
-  let tbkOrdenCompra = params.TBK_ORDEN_COMPRA;
-  let tbkIdSesion = params.TBK_ID_SESION;
-
-  let step = null;
-  let stepDescription = null;
-  let viewData = {
-    token,
-    tbkToken,
-    tbkOrdenCompra,
-    tbkIdSesion
-  };
-
-  if (token && !tbkToken) {//Flujo 1
-    const commitResponse = await (new WebpayPlus.Transaction()).commit(token);
-    viewData = {
-      token,
-      commitResponse,
-    };
-    step = "Confirmar Transacción";
-    stepDescription = "En este paso tenemos que confirmar la transacción con el objetivo de avisar a " +
-      "Transbank que hemos recibido la transacción ha sido recibida exitosamente. En caso de que " +
-      "no se confirme la transacción, ésta será reversada.";
-
-    response.render("webpay_plus/commit", {
-      step,
-      stepDescription,
-      viewData,
-    });
-    // se debe cargar el coin aqui
-    return;
-  }
-  else if (!token && !tbkToken) {//Flujo 2
-    step = "El pago fue anulado por tiempo de espera.";
-    stepDescription = "En este paso luego de anulación por tiempo de espera (+10 minutos) no es necesario realizar la confirmación ";
-  }
-  else if (!token && tbkToken) {//Flujo 3
-    step = "El pago fue anulado por el usuario.";
-    stepDescription = "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
-  }
-  else if (token && tbkToken) {//Flujo 4
-    step = "El pago es inválido.";
-    stepDescription = "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
-  }
-
-  response.render("webpay_plus/commit-error", {
-    step,
-    stepDescription,
-    viewData,
-  });
-});
-
-
-exports.status = asyncHandler(async function (request, response, next) {
-  let token = request.body.token;
-
-  const statusResponse = await (new WebpayPlus.Transaction()).status(token);
-
-  let viewData = {
-    token,
-    statusResponse,
-  };
-
-  response.render("webpay_plus/status", {
-    step: "Estado de Transacción",
-    stepDescription:
-      "Puedes solicitar el estado de una transacción hasta 7 días despues de que haya sido" +
-      " realizada. No hay limite de solicitudes de este tipo, sin embargo, una vez pasados los " +
-      "7 días ya no podrás revisar su estado.",
-    viewData,
-  });
-});
-
-exports.refund = asyncHandler(async function (request, response, next) {
-  let { token, amount } = request.body;
-
-  const refundResponse = await (new WebpayPlus.Transaction()).refund(token, amount);
-
-  let viewData = {
-    token,
-    amount,
-    refundResponse,
-  };
-
-  response.render("webpay_plus/refund", {
-    step: "Reembolso de Transacción",
-    stepDescription:
-      "Podrás pedir el reembolso del dinero al tarjeta habiente, dependiendo del monto " +
-      "y el tiempo transacurrido será una Reversa, Anulación o Anulación parcial.",
-    viewData,
-  });
-});
- */
 module.exports = CtrlTransaccion;
