@@ -11,5 +11,12 @@ POST https://webpay3gint.transbank.cl/webpayserver/initTransaction
 Content-Type: application/json
 
 {
-    "token_ws": "01ab4049f933997010532601d5b0e0cfb46fbc0a7cbd4cbd472394be7449"
+    "token_ws": "01ab701a99b46ef3503482e68052e9f6404a0679d89d8b82f7ee68c73d90c959"
+}
+###
+POST http://localhost:4000/api/webpay/confirmar/635eb96ab21c143715f9090f
+Content-Type: application/json
+
+{
+    "token_ws": "01ab701a99b46ef3503482e68052e9f6404a0679d89d8b82f7ee68c73d90c959"
 }
