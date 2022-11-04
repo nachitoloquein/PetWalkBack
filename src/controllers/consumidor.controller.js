@@ -1,7 +1,6 @@
 const consumidorCtrl= {};
 const {crearBilletera} = require('./billetera.controller');
 const Consumidor = require('../models/consumidor.model');
-const Trabajador = require('../models/trabajador.model')
 const bcrypt = require('bcrypt');
 const funciones = require('../helpers/functions.helpers');
 const jwt = require('jsonwebtoken');
@@ -45,16 +44,6 @@ consumidorCtrl.Registro = async(req, res)=>{
     }
 }
 
-consumidorCtrl.buscarTrabajadorCercano = async(req, res)=>{
-    try{
-        const consumidor = await Consumidor.findById(req.params.id);
-        const trabajadores = await Trabajador.find({comuna: consumidor.comuna})
-        res.send(trabajadores);
-    }
-    catch{
-        res.status(404);
-    }
-}
 
 consumidorCtrl.login= async(req, res)=>{
     try{
