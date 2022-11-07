@@ -8,6 +8,6 @@ router.get('/consumidor/:id', matchCtrl.verMatchesConsumidor);
 router.get('/trabajador/:id', matchCtrl.verMatchesTrabajador);
 router.post('/', matchCtrl.generarMatch);
 router.put('/finalizar/:id', matchCtrl.finalizarTrabajo);
-router.patch('/cancelar/:id', matchCtrl.finalizarTrabajo);
+router.patch('/cancelar/:id', reembolsoCtrl.cancelarTrabajo);
 
 module.exports = router;

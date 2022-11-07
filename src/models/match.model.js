@@ -6,7 +6,7 @@ const matchSchema = new Schema({
     fechaCreacion: {type: Date, required: true, default: Date.now()},
     horaTrabajo: {type: String, required: true},
     valorPaseo: {type: Number, required: true, default: 2},
-    estadoTrabajo: {Type: String, required: true, default: 'Pendiente'},
+    estadoTrabajo: {type: String, required: true, default: 'Pendiente'},
     fotoPruebaUrl: {type: String, required: false}
 },{
     versionKey: false   
