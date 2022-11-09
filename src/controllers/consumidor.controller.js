@@ -44,7 +44,6 @@ consumidorCtrl.Registro = async(req, res)=>{
     }
 }
 
-
 consumidorCtrl.login= async(req, res)=>{
     try{
         const {contrasena, correo } = req.body;
