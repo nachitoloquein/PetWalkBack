@@ -4,6 +4,7 @@ const Trabajador = require('../models/trabajador.model');
 const funciones = require('../helpers/functions.helpers');
 const bcrypt = require('bcrypt');
 const email = require('../config/mail.config')
+const jwt = require('jsonwebtoken')
 
 trabajadorCtrl.listarSolicitud = async(req,res)=>{
     const solicitudes = await Trabajador.find({estado: 'Pendiente'});

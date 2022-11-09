@@ -1,0 +1,11 @@
+###
+POST http://localhost:4000/api/match
+Content-Type: application/json
+
+{
+      "idConsumidor": "634f4e17f47d79b6734bd10a",
+      "idTrabajador": "636aa23b6094f2219daa379c",
+      "horaTrabajo": "13:00",
+      "monto": "2"
+}
+

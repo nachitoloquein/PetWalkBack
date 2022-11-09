@@ -9,6 +9,7 @@ matchCtrl.generarMatch= async(req,res)=>{
         const newMatch = {idConsumidor, idTrabajador, horaTrabajo}
         const newObject = new Match(newMatch);
         await newObject.save();
+        res.send({'message': "match creado", newObject})
     }catch(err){
         res.status(400).send({'message':err});
     }
