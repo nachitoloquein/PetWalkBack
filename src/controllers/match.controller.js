@@ -1,14 +1,17 @@
 const matchCtrl = {}
 
 const Match = require('../models/match.model');
+const billeteraCtrl = require('./billetera.controller')
 
 matchCtrl.generarMatch= async(req,res)=>{
     try{
         const {idConsumidor, idTrabajador, horaTrabajo, monto} = req.body;
-        if (monto<2) return res.status(402).send('Saldo de PetCoins insuficiente');
+        if (monto<1) return res.status(402).send('Saldo de PetCoins insuficiente');
         const newMatch = {idConsumidor, idTrabajador, horaTrabajo}
         const newObject = new Match(newMatch);
         await newObject.save();
+        res.status(200).send({'message': 'objeto creado', newObject});
+        billeteraCtrl.restarCoinsMatch(idConsumidor);
     }catch(err){
         res.status(400).send({'message':err});
     }

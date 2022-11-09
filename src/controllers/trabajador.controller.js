@@ -6,8 +6,6 @@ const bcrypt = require('bcrypt');
 const transporter = require('../config/mail.config');
 const jwt = require('jsonwebtoken')
 
-
-
 trabajadorCtrl.listarSolicitud = async(req,res)=>{
     const solicitudes = await Trabajador.find({estado: 'Pendiente'});
     res.json(solicitudes);
