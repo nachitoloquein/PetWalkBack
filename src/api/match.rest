@@ -9,3 +9,5 @@ Content-Type: application/json
       "monto": "2"
 }
 
+###
+PUT http://localhost:4000/api/match/finalizar/636dc4c05d0be02905152850

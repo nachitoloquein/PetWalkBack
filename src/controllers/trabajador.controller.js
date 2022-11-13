@@ -130,4 +130,14 @@ trabajadorCtrl.mostrarTrabajadorID = async(req, res)=>{
   
 }
 
+trabajadorCtrl.verificarTrabajador = async(req, res)=> {
+    try{
+        let token = req.headers.authorization;
+        const usuario = await jwt.decode(token)
+        res.send(usuario._id);
+    }catch(error){
+        res.status(407).send('No hay usuario conectado')
+    }
+}
+
 module.exports= trabajadorCtrl;
