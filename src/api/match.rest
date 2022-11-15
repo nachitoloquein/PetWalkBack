@@ -1,0 +1,12 @@
+###
+POST http://localhost:4000/api/match/6373fc987a9baff77efff2ed
+Content-Type: application/json
+
+{
+    "idConsumidor": "635e97fd0bdb33aa5bd9a752",
+    "idTrabajador": "6330d93ae0d22bc64927df0e",
+    "monto": "4"
+}
+
+###
+GET http://localhost:4000/api/match/trabajador/6330d93ae0d22bc64927df0e

@@ -24,7 +24,7 @@ ctrlHorario.listarHorasDeUnTrabajadorDisponible = async(req,res)=>{
 
 ctrlHorario.marcarOcupada = async(idHora)=>{
     try{
-        await Horario.findById(idHora, { $set:{disponible: false}});
+        await Horario.findByIdAndUpdate(idHora, { $set:{disponible: false}});
     }catch(err){
         console.log(err);
     }
