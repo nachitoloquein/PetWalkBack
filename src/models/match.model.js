@@ -4,7 +4,7 @@ const matchSchema = new Schema({
     idConsumidor: {type: Schema.Types.ObjectId, ref: 'consumidor', required: true},
     idTrabajador: {type: Schema.Types.ObjectId, ref: 'trabajador', required: true},
     fechaCreacion: {type: Date, required: true, default: Date.now()},
-    horaTrabajo: {type: String, required: true},
+    idHoraTrabajo: {type: Schema.Types.ObjectId, ref: 'horario', required: true},
     valorPaseo: {type: Number, required: true, default: 2},
     estadoTrabajo: {type: String, required: true, default: 'Pendiente'},
     fotoPruebaUrl: {type: String, required: false}

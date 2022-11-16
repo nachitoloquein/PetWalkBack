@@ -21,4 +21,15 @@ boletaCtrl.verBoletas = async(req,res)=>{
     }
 }
 
+boletaCtrl.boletaFiltroFecha = async(req,res)=>{
+    try {
+        const fechaActual = Date.now();
+        const boletas = await Boleta.find({fechaCompra:{"$gte": fechaActual-7 * 24 * 3600 * 1000, "$lt": fechaActual}});
+        res.json(boletas)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = boletaCtrl;
