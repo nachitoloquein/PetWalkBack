@@ -8,7 +8,6 @@ matchCtrl.generarMatch= async(req,res)=>{
     try{
         const {idConsumidor, idTrabajador, monto} = req.body;
         const idHoraTrabajo = req.params.id;
-        console.log(`el monto es ${monto}`)
         if (monto<1) return res.status(402).send('Saldo de PetCoins insuficiente');
         const newMatch = {idConsumidor, idTrabajador, idHoraTrabajo};
         const newObject = new Match(newMatch);

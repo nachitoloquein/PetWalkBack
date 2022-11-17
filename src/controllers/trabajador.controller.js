@@ -2,6 +2,7 @@ const trabajadorCtrl = {}
 
 const Trabajador = require('../models/trabajador.model');
 const funciones = require('../helpers/functions.helpers');
+const valoracion = require('./valoracion.controller');
 const bcrypt = require('bcrypt');
 const transporter = require('../config/mail.config');
 const jwt = require('jsonwebtoken')
@@ -43,8 +44,8 @@ trabajadorCtrl.aceptar = async(req, res)=>{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado:'Activo'} });
         const user = await Trabajador.findById(req.params.id);
         transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} su solicitud a sido aprobada por nuestros administradores, ya puede trabajar en nuestra plataforma.`);
-        res.json({status: 'Trabajador habilitado'})
-
+        res.json({status: 'Trabajador habilitado'});
+        valoracion.crearCalificador(user._id);
     }
     catch(err){
         res.send({message:  'ha ocurrido un error de '+ err});
