@@ -14,7 +14,7 @@ matchCtrl.generarMatch= async(req,res)=>{
         const newObject = new Match(newMatch);
         await newObject.save();
         res.status(200).send({'message': 'objeto creado', newObject});
-        //billeteraCtrl.restarCoinsMatch(idConsumidor);
+        billeteraCtrl.restarCoinsMatch(idConsumidor, monto);
         horarioCtrl.marcarOcupada(idHoraTrabajo);
     }catch(err){
         res.status(400).send({'message':err});

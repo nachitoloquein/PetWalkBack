@@ -23,11 +23,9 @@ CtrlBilletera.cargarCoinsIdUsuario = async(req,res)=>{
     }
 }
 
-CtrlBilletera.restarCoinsMatch= async(id)=>{
+CtrlBilletera.restarCoinsMatch= async(idConsumidor, dineroActual)=>{
     try{
-        const billetera = await Billetera.findById(id);
-        const totalActual = parseInt(billetera.monto);
-        billetera.update({$set:{monto: totalActual-1}});
+        await Billetera.findOneAndUpdate({idConsumidor},{$set:{monto: dineroActual-1}});
     }catch(e){
         console.log(e);
     }
