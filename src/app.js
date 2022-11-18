@@ -23,6 +23,7 @@ app.use("/api/reporte",require('./routes/reporte.routes'));
 app.use("/api/match",require('./routes/match.routes'));
 app.use("/api/boleta",require('./routes/boleta.routes'));
 app.use("/api/horario",require('./routes/horario.routes'));
+app.use("/api/valoracion",require('./routes/valoracion.routes'));
 
 //Exportamos el archivo
 app.use('/files', express.static('files'));

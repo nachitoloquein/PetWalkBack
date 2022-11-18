@@ -9,7 +9,7 @@ Content-Type: application/json
     "costo": "10000",
     "encabezado": "Oferton",
     "descripcion": "Lleva 10000 coins en 10 mil pesos",
-    "cantidadCoins": "10000"
+    "cantidadCoins": "10"
 }
 
 ###

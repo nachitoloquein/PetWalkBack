@@ -11,8 +11,8 @@ ctrlValoracion.calificarTrabajador = async(req,res)=>{
     try{
         const {calificacion, idTrabajador} = req.body;
         const trabajadorValorado = await Valoracion.findOne({idTrabajador});
-        const calculoTotal = (calificacion/(trabajadorValorado.cantidadValoraciones + 1));
-        await trabajadorValorado.update({$set:{totalValorado: calculoTotal, cantidadValoraciones: +1}});
+        const calculoTotal = ((parseInt(trabajadorValorado.totalValorado) * parseInt(trabajadorValorado.cantidadValoraciones))+parseInt(calificacion))/parseInt((trabajadorValorado.cantidadValoraciones)+1);
+        await trabajadorValorado.update({$set:{totalValorado: calculoTotal, cantidadValoraciones: trabajadorValorado.cantidadValoraciones+1}});
         res.send({message: 'trabajador calificado'});
     }catch(e){
         res.send({error: e});
