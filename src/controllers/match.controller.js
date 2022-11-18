@@ -31,7 +31,7 @@ matchCtrl.obtenerTodos= async(req,res)=>{
 
 matchCtrl.verMatchesConsumidor= async(req,res)=>{
     try{
-        const matches = await Match.findOne({idConsumidor: req.params.id});
+        const matches = await Match.find({idConsumidor: req.params.id});
         res.json(matches)
     }catch(err){
         res.status(400).send({'message':err});
@@ -40,7 +40,7 @@ matchCtrl.verMatchesConsumidor= async(req,res)=>{
 
 matchCtrl.verMatchesTrabajador= async(req,res)=>{
     try{
-        const matches = await Match.findOne({idTrabajador: req.params.id});
+        const matches = await Match.find({idTrabajador: req.params.id});
         res.json(matches)
     }catch(err){
         res.status(400).send({'message':err});
