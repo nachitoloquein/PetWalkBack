@@ -31,7 +31,7 @@ matchCtrl.obtenerTodos= async(req,res)=>{
 
 matchCtrl.verMatchesConsumidor= async(req,res)=>{
     try{
-        const matches = await Match.find({idConsumidor: req.params.id});
+        const matches = await Match.find({idConsumidor: req.params.id}).populate('idTrabajador').populate('idHoraTrabajo');
         res.json(matches)
     }catch(err){
         res.status(400).send({'message':err});
