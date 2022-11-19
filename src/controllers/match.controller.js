@@ -31,7 +31,7 @@ matchCtrl.obtenerTodos= async(req,res)=>{
 
 matchCtrl.verMatchesConsumidor= async(req,res)=>{
     try{
-        const matches = await Match.find({idConsumidor: req.params.id}).populate('idTrabajador').populate('idHoraTrabajo');
+        const matches = await Match.find({idConsumidor: req.params.id, estadoTrabajo: 'Pendiente'}).populate('idTrabajador').populate('idHoraTrabajo');
         res.json(matches)
     }catch(err){
         res.status(400).send({'message':err});
@@ -39,6 +39,24 @@ matchCtrl.verMatchesConsumidor= async(req,res)=>{
 }
 
 matchCtrl.verMatchesTrabajador= async(req,res)=>{
+    try{
+        const matches = await Match.find({idTrabajador: req.params.id, estadoTrabajo: 'Pendiente'}).populate('idConsumidor').populate('idHoraTrabajo');
+        res.json(matches)
+    }catch(err){
+        res.status(400).send({'message':err});
+    }
+}
+
+matchCtrl.verHistorialConsumidor= async(req,res)=>{
+    try{
+        const matches = await Match.find({idConsumidor: req.params.id}).populate('idTrabajador').populate('idHoraTrabajo');
+        res.json(matches)
+    }catch(err){
+        res.status(400).send({'message':err});
+    }
+}
+
+matchCtrl.verHistorialTrabajador= async(req,res)=>{
     try{
         const matches = await Match.find({idTrabajador: req.params.id}).populate('idConsumidor').populate('idHoraTrabajo');
         res.json(matches)
@@ -51,7 +69,7 @@ matchCtrl.finalizarTrabajo = async(req,res)=>{
     try{
         const {fotoPruebaUrl} = req.body;
         const match = await Match.findById(req.params.id);
-        await match.update({$set:{estadoTrabajo: 'Finalizado', fotoPruebaUrl: fotoPruebaUrl}});
+        await match.update({$set:{estadoTrabajo: 'Finalizado'}});
         res.send({message: 'finalización exitosa'});
     }catch(err){
         res.send({message: err});
