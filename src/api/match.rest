@@ -3,14 +3,10 @@ POST http://localhost:4000/api/match
 Content-Type: application/json
 
 {
-      "idConsumidor": "634f4e17f47d79b6734bd10a",
-      "idTrabajador": "636aa23b6094f2219daa379c",
-      "horaTrabajo": "13:00",
-      "monto": "2"
+    "idConsumidor": "635e97fd0bdb33aa5bd9a752",
+    "idTrabajador": "6330d93ae0d22bc64927df0e",
+    "monto": "4"
 }
 
 ###
-PUT http://localhost:4000/api/match/finalizar/636dc4c05d0be02905152850
-
-###
-GET http://localhost:4000/api/match/trabajador/636aa23b6094f2219daa379c
+GET http://localhost:4000/api/match/trabajador/6330d93ae0d22bc64927df0e
