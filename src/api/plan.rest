@@ -9,7 +9,11 @@ Content-Type: application/json
     "costo": "30000",
     "encabezado": "Oferton",
     "descripcion": "Lleva 10000 coins en 10 mil pesos",
+<<<<<<< HEAD
     "cantidadCoins": "15"
+=======
+    "cantidadCoins": "10"
+>>>>>>> dcdade562690a17302df41df0bb2072f81deedef
 }
 
 ###
@@ -27,7 +31,11 @@ Content-Type: application/json
 DELETE  http://localhost:4000/api/plan/635053010765deb4901281ef
 
 ###
+<<<<<<< HEAD
 PUT http://localhost:4000/api/plan/crearDescuento/635dd76d64fe4b54704f5bb5
+=======
+PUT http://localhost:4000/api/plan/crearDescuento/6377a37c0f98bda1ac645b63
+>>>>>>> dcdade562690a17302df41df0bb2072f81deedef
 Content-Type: application/json
 
 {

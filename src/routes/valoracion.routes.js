@@ -3,7 +3,6 @@ const valoracionCtrl = require('../controllers/valoracion.controller');
 const router = Router();
 
 router.get('/:id', valoracionCtrl.mostrarValoracionTrabajador);
-/* router.post('/trabajador', reporteCtrl.reportarTrabajador);
-router.post('/consumidor', reporteCtrl.reportarUsuario); */
+router.post('/', valoracionCtrl.calificarTrabajador);
 
 module.exports = router;

@@ -31,7 +31,7 @@ matchCtrl.obtenerTodos= async(req,res)=>{
 
 matchCtrl.verMatchesConsumidor= async(req,res)=>{
     try{
-        const matches = await Match.find({idConsumidor: req.params.id});
+        const matches = await Match.find({idConsumidor: req.params.id, estadoTrabajo: 'Pendiente'}).populate('idTrabajador').populate('idHoraTrabajo');
         res.json(matches)
     }catch(err){
         res.status(400).send({'message':err});
@@ -51,7 +51,7 @@ matchCtrl.finalizarTrabajo = async(req,res)=>{
     try{
         const {fotoPruebaUrl} = req.body;
         const match = await Match.findById(req.params.id);
-        await match.update({$set:{estadoTrabajo: 'Finalizado', fotoPruebaUrl: fotoPruebaUrl}});
+        await match.update({$set:{estadoTrabajo: 'Finalizado'}});
         res.send({message: 'finalización exitosa'});
     }catch(err){
         res.send({message: err});
