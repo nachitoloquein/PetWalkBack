@@ -1,0 +1,11 @@
+###
+GET http://localhost:4000/api/valoracion/6377a24b0f98bda1ac645b4e
+
+###
+POST http://localhost:4000/api/valoracion
+Content-Type: application/json
+
+{
+    "calificacion": "5",
+    "idTrabajador": "6377a24b0f98bda1ac645b4e"
+}

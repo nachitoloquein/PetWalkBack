@@ -3,9 +3,17 @@ POST http://localhost:4000/api/horario/
 Content-Type: application/json
 
 {
+<<<<<<< HEAD
     "idTrabajador":"63743b78d785d2ffca7e774b",
+=======
+    "idTrabajador":"634b4e5cdc7904138011938f",
+>>>>>>> c36e1b89d77dd9bf05edc3370b84c20a73bb745e
     "horaIntervalos": "12:00-12:30"
 }
 
 ###
+<<<<<<< HEAD
 GET http://localhost:4000/api/horario/63743b78d785d2ffca7e774b
+=======
+GET http://localhost:4000/api/horario/634b4e5cdc7904138011938f
+>>>>>>> c36e1b89d77dd9bf05edc3370b84c20a73bb745e
