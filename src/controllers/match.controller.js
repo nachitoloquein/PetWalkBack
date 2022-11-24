@@ -14,11 +14,16 @@ matchCtrl.generarMatch= async(req,res)=>{
         await newObject.save();
         res.status(200).send({'message': 'objeto creado', newObject});
 <<<<<<< HEAD
+<<<<<<< HEAD
         billeteraCtrl.restarCoinsMatch(idConsumidor);
 =======
         billeteraCtrl.restarCoinsMatch(idConsumidor, monto);
         horarioCtrl.marcarOcupada(idHoraTrabajo);
 >>>>>>> c36e1b89d77dd9bf05edc3370b84c20a73bb745e
+=======
+        //billeteraCtrl.restarCoinsMatch(idConsumidor);
+        horarioCtrl.marcarOcupada(idHoraTrabajo);
+>>>>>>> c5c99a1ba9805a270ea03aeb8998e68eefe3496c
     }catch(err){
         res.status(400).send({'message':err});
     }
@@ -45,6 +50,7 @@ matchCtrl.verMatchesConsumidor= async(req,res)=>{
 matchCtrl.verMatchesTrabajador= async(req,res)=>{
     try{
 <<<<<<< HEAD
+<<<<<<< HEAD
         const matches = await Match.find({idTrabajador: req.params.id});
 =======
         const matches = await Match.find({idTrabajador: req.params.id, estadoTrabajo: 'Pendiente'}).populate('idConsumidor').populate('idHoraTrabajo');
@@ -67,6 +73,9 @@ matchCtrl.verHistorialTrabajador= async(req,res)=>{
     try{
         const matches = await Match.find({idTrabajador: req.params.id}).populate('idConsumidor').populate('idHoraTrabajo');
 >>>>>>> c36e1b89d77dd9bf05edc3370b84c20a73bb745e
+=======
+        const matches = await Match.find({idTrabajador: req.params.id});
+>>>>>>> c5c99a1ba9805a270ea03aeb8998e68eefe3496c
         res.json(matches)
     }catch(err){
         res.status(400).send({'message':err});

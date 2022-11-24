@@ -13,7 +13,11 @@ Content-Type: application/json
     "cantidadCoins": "15"
 =======
     "cantidadCoins": "10"
+<<<<<<< HEAD
 >>>>>>> c36e1b89d77dd9bf05edc3370b84c20a73bb745e
+=======
+>>>>>>> dcdade562690a17302df41df0bb2072f81deedef
+>>>>>>> c5c99a1ba9805a270ea03aeb8998e68eefe3496c
 }
 
 ###
@@ -35,7 +39,11 @@ DELETE  http://localhost:4000/api/plan/635053010765deb4901281ef
 PUT http://localhost:4000/api/plan/crearDescuento/635dd76d64fe4b54704f5bb5
 =======
 PUT http://localhost:4000/api/plan/crearDescuento/6377a37c0f98bda1ac645b63
+<<<<<<< HEAD
 >>>>>>> c36e1b89d77dd9bf05edc3370b84c20a73bb745e
+=======
+>>>>>>> dcdade562690a17302df41df0bb2072f81deedef
+>>>>>>> c5c99a1ba9805a270ea03aeb8998e68eefe3496c
 Content-Type: application/json
 
 {
