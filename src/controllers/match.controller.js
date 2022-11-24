@@ -67,7 +67,6 @@ matchCtrl.verHistorialTrabajador= async(req,res)=>{
 
 matchCtrl.finalizarTrabajo = async(req,res)=>{
     try{
-        const {fotoPruebaUrl} = req.body;
         const match = await Match.findById(req.params.id);
         await match.update({$set:{estadoTrabajo: 'Finalizado'}});
         res.send({message: 'finalización exitosa'});
