@@ -29,4 +29,13 @@ CtrlReporte.reportarUsuario= async(req,res)=>{
     }
 }
 
+CtrlReporte.reporteActivo = async(req,res)=>{
+    const reportes = await Reporte.find({estadoReporte: true , tipoReporte:0});
+    res.json(reportes);
+}
+
+CtrlReporte.reporteDesactivar = async(req,res)=>{
+    await Reporte.findByIdAndUpdate(req.params.id,{ $set: {estadoReporte: false } });
+}
+
 module.exports = CtrlReporte;
