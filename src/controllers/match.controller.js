@@ -75,4 +75,14 @@ matchCtrl.finalizarTrabajo = async(req,res)=>{
     }
 }
 
+
+matchCtrl.marcarTrabajoPagado = async(req,res)=>{
+    try{
+        await Match.updateMany({idTrabajador: req.params.id}, {$set:{estadoTrabajo: 'Pagado'}});
+        res.send({message: 'pago exitoso'});
+    }catch(err){
+        res.send({message: err});
+    }
+}
+
 module.exports = matchCtrl;

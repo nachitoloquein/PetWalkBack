@@ -24,6 +24,7 @@ app.use("/api/match",require('./routes/match.routes'));
 app.use("/api/boleta",require('./routes/boleta.routes'));
 app.use("/api/horario",require('./routes/horario.routes'));
 app.use("/api/valoracion",require('./routes/valoracion.routes'));
+app.use("/api/retiroDinero",require('./routes/solicitudRetiroDinero.routes'));
 
 //Exportamos el archivo
 app.use('/files', express.static('files'));

@@ -25,7 +25,7 @@ CtrlTransaccion.verEstado = async(req,res)=>{
   }
   else{
     //no paso
-    res.redirect('http://www.facebook.com');
+    res.redirect('http://localhost:8100/transaccionMala');
   }
 }
 
