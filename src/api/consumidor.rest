@@ -17,6 +17,9 @@ Content-Type: application/json
 GET http://localhost:4000/api/consumidor
 
 ###
+GET http://localhost:4000/api/consumidor/perfil/634b4f39dc790413801193a2
+
+###
 GET http://localhost:4000/api/consumidor/632b786701a94b5755fa9901
 
 ###
@@ -30,6 +33,9 @@ POST http://localhost:4000/api/consumidor/login
 Content-Type: application/json
 
 {
-    "correo": "otros7@gmail.com",
+    "correo": "elnachoescachondo@gmail.com",
     "contrasena": "123456"
 }
+
+###
+GET http://localhost:4000/api/consumidor/lol

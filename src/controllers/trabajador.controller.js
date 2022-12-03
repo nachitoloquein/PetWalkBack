@@ -2,11 +2,10 @@ const trabajadorCtrl = {}
 
 const Trabajador = require('../models/trabajador.model');
 const funciones = require('../helpers/functions.helpers');
+const valoracion = require('./valoracion.controller');
 const bcrypt = require('bcrypt');
 const transporter = require('../config/mail.config');
 const jwt = require('jsonwebtoken')
-
-
 
 trabajadorCtrl.listarSolicitud = async(req,res)=>{
     const solicitudes = await Trabajador.find({estado: 'Pendiente'});
@@ -45,8 +44,8 @@ trabajadorCtrl.aceptar = async(req, res)=>{
         await Trabajador.findByIdAndUpdate(req.params.id,{ $set: {estado:'Activo'} });
         const user = await Trabajador.findById(req.params.id);
         transporter.sendEmail(user, `Estimado ${user.nombre} ${user.apellido} su solicitud a sido aprobada por nuestros administradores, ya puede trabajar en nuestra plataforma.`);
-        res.json({status: 'Trabajador habilitado'})
-
+        res.json({status: 'Trabajador habilitado'});
+        valoracion.crearCalificador(user._id);
     }
     catch(err){
         res.send({message:  'ha ocurrido un error de '+ err});
@@ -89,9 +88,8 @@ trabajadorCtrl.login = async(req,res)=>{
         }
 
         if(user &&(await bcrypt.compare(contrasena, user.contrasena))){
-            const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'test');
-            console.log(token);   
-            res.send({message: 'estas logeado'})
+            const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'trabajador');
+            res.send({token})
         }
     }
     catch(err){
@@ -121,6 +119,23 @@ trabajadorCtrl.activar = async(req,res)=>{
     }
     catch(err){
         res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
+trabajadorCtrl.mostrarTrabajadorID = async(req, res)=>{
+    
+        const trabajador = await Trabajador.findById(req.params.id);
+        res.send(trabajador);
+  
+}
+
+trabajadorCtrl.verificarTrabajador = async(req, res)=> {
+    try{
+        let token = req.headers.authorization;
+        const trabajador = await jwt.decode(token)
+        res.send(trabajador._id);
+    }catch(error){
+        res.status(407).send('No hay usuario conectado')
     }
 }
 

@@ -38,7 +38,6 @@ adminCtrl.add= async(req,res)=>{
     }
 }
 
-
 adminCtrl.login= async(req, res)=>{
     try{
         const {contrasena, correo } = req.body;
@@ -56,8 +55,7 @@ adminCtrl.login= async(req, res)=>{
 
         if(user &&(await bcrypt.compare(contrasena, user.contrasena))){
             const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'test');
-            console.log(token);   
-            res.send({message: 'estas logeado'});
+            res.send({token});
         }
         else{
             res.status(401).send('Usuario inválido');

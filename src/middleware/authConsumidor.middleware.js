@@ -10,7 +10,7 @@ async function verificarConsumidor(req, res, next) {
 			return res.status(401).send('La cabecera está vacía');
 		}
 
-		const payload = await jwt.verify(token, 'test');
+		const payload = await jwt.verify(token, 'consumidor');
 		if (!payload) {
 			return res.status(401).send('No reconoce token');
 		}

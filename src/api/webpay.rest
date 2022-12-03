@@ -1,0 +1,16 @@
+###
+POST http://localhost:4000/api/webpay/create
+Content-Type: application/json
+
+{
+    "costo": "1000"
+}
+
+###
+POST http://localhost:4000/api/webpay/res
+
+Content-Type: application/json
+
+{
+    "token_ws": "01abc12aabe835aab953c05b24ce9a643986ea77dc76834101f56e4220d0afe5"
+}

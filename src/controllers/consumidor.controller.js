@@ -1,7 +1,6 @@
 const consumidorCtrl= {};
 const {crearBilletera} = require('./billetera.controller');
 const Consumidor = require('../models/consumidor.model');
-const Trabajador = require('../models/trabajador.model')
 const bcrypt = require('bcrypt');
 const funciones = require('../helpers/functions.helpers');
 const jwt = require('jsonwebtoken');
@@ -45,17 +44,6 @@ consumidorCtrl.Registro = async(req, res)=>{
     }
 }
 
-consumidorCtrl.buscarTrabajadorCercano = async(req, res)=>{
-    try{
-        const consumidor = await Consumidor.findById(req.params.id);
-        const trabajadores = await Trabajador.find({comuna: consumidor.comuna})
-        res.send(trabajadores);
-    }
-    catch{
-        res.status(404);
-    }
-}
-
 consumidorCtrl.login= async(req, res)=>{
     try{
         const {contrasena, correo } = req.body;
@@ -76,9 +64,8 @@ consumidorCtrl.login= async(req, res)=>{
         }
 
         if(user &&(await bcrypt.compare(contrasena, user.contrasena))){
-            const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'test');
-            console.log(token);   
-            res.send({message: 'estas logeado'})
+            const token = jwt.sign({_id: user},process.env.TOKEN_KEY || 'consumidor');
+            res.send({token});
         }
     }
     catch(err){
@@ -108,6 +95,25 @@ consumidorCtrl.activar = async(req,res)=>{
     }
     catch(err){
         res.send({message:  'ha ocurrido un error de '+ err});
+    }
+}
+
+consumidorCtrl.mostrarConsumidorID = async(req, res)=>{
+    try{
+    const consumidor = await Consumidor.findById(req.params.id);
+    res.send(consumidor);
+    }catch{
+        return res.status(404);
+    }
+}
+
+consumidorCtrl.verificarConsumidor = async(req, res)=> {
+    try{
+        let token = req.headers.authorization;
+        const usuario = await jwt.decode(token)
+        res.send(usuario._id);
+    }catch(error){
+        res.status(407).send('No hay usuario conectado')
     }
 }
 

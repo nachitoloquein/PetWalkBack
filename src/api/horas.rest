@@ -1,0 +1,11 @@
+###
+POST http://localhost:4000/api/horario/
+Content-Type: application/json
+
+{
+    "idTrabajador":"634b4e5cdc7904138011938f",
+    "horaIntervalos": "12:00-12:30"
+}
+
+###
+GET http://localhost:4000/api/horario/634b4e5cdc7904138011938f

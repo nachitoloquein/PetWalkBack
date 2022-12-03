@@ -34,3 +34,6 @@ Content-Type: application/json
     "correo": "i.sallorenzo@duocuc.cl",
     "contrasena": "123456"
 }
+
+###
+GET http://localhost:4000/api/trabajador/perfil/634b4e5cdc7904138011938f

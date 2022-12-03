@@ -1,0 +1,12 @@
+###
+GET http://localhost:4000/api/reporte
+
+###
+POST http://localhost:4000/api/reporte/localhost:4000/api/trabajador
+Content-Type: application/json
+
+{
+    "idConsumidor": "",
+    "idTrabajador": "",
+    "descripcion": ""
+}

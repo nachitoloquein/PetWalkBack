@@ -4,7 +4,9 @@ const storage = require('../libs/multer.lib');
 
 const trabajadorCtrl = require('../controllers/trabajador.controller');
 
+router.get('/trabajadorConectado', trabajadorCtrl.verificarTrabajador);
 router.get('/', trabajadorCtrl.listarSolicitud);
+router.get('/perfil/:id', trabajadorCtrl.mostrarTrabajadorID);
 router.get('/all', trabajadorCtrl.listarTrabajadores);
 router.post('/', storage.upload.array('documentosTodos', 3), trabajadorCtrl.enviarSolicitud);
 router.post('/login', trabajadorCtrl.login);

@@ -1,0 +1,13 @@
+###
+GET http://localhost:4000/api/boleta
+
+###
+POST http://localhost:4000/api/boleta
+Content-Type: application/json
+
+{
+    "idConsumidor":"635e97fd0bdb33aa5bd9a752",
+    "cantidadCoins": "2000",
+    "totalPagado": "5000",
+    "fechaCompra": "2022/11/11"
+}
