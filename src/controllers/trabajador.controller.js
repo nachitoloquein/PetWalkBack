@@ -147,7 +147,7 @@ trabajadorCtrl.recuperarContrasena = async(req,res)=>{
         if (!trabajador) return res.status(409).send("usuario no existente");
         encryptedPassword = await bcrypt.hash(contrasenaNueva, 10);
         await trabajador.update({$set:{contrasena: encryptedPassword}});
-        res.status(200).send('Contrasena actualizada');
+        res.send({message:'Contrasena actualizada'});
         transporter.sendEmail(trabajador, `Estimado ${trabajador.nombre} ${trabajador.apellido} su actualización de contraseña se ha realizado satisfactoriamente`);
     }catch(err){
         res.status(400).send("error de "+err);

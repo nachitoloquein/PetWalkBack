@@ -125,7 +125,7 @@ consumidorCtrl.recuperarContrasena = async(req,res)=>{
         if (!consumidor) return res.status(409).send("usuario no existente");
         encryptedPassword = await bcrypt.hash(contrasenaNueva, 10);
         await consumidor.update({$set:{contrasena: encryptedPassword}});
-        res.status(200).send('Contrasena actualizada');
+        res.status(200).send({message:'Contrasena actualizada'});
         transporter.sendEmail(consumidor, `Estimado ${consumidor.nombre} ${consumidor.apellido} su actualización de contraseña se ha realizado satisfactoriamente`);
 
     }catch(err){
