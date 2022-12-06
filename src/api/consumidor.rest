@@ -38,4 +38,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:4000/api/consumidor/lol
+POST http://localhost:4000/api/consumidor/recuperarContrasenaConsumidor
+Content-Type: application/json
+
+{
+    "correo": "i.sallorenzo@duocuc.cl",
+    "contrasenaNueva": "123456"
+}

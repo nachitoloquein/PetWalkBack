@@ -10,6 +10,7 @@ router.get('/perfil/:id', trabajadorCtrl.mostrarTrabajadorID);
 router.get('/all', trabajadorCtrl.listarTrabajadores);
 router.post('/', storage.upload.array('documentosTodos', 3), trabajadorCtrl.enviarSolicitud);
 router.post('/login', trabajadorCtrl.login);
+router.post('/recuperarContrasena', trabajadorCtrl.recuperarContrasena);
 router.patch('/aceptar/:id', trabajadorCtrl.aceptar);
 router.patch('/rechazar/:id', trabajadorCtrl.rechazar);
 router.patch('/banear/:id', trabajadorCtrl.banear);

@@ -29,7 +29,7 @@ consumidorCtrl.Registro = async(req, res)=>{
         if (newConsumidor){
             const newSolicitud = new Consumidor(newConsumidor);
             await newSolicitud.save();
-            transporter.sendEmail(newSolicitud, '"Información de PetWalk" <petwalk.petsolutions@gmail.com>', `Estimado ${newSolicitud.nombre} ${newSolicitud.apellido} ha completado exitosamente su registro, ahora usted puede usar su cuenta de Pet Walk y buscar trabajadores`);
+            transporter.sendEmail(newSolicitud, `Estimado ${newSolicitud.nombre} ${newSolicitud.apellido} ha completado exitosamente su registro, ahora usted puede usar su cuenta de Pet Walk y buscar trabajadores`);
             crearBilletera(newSolicitud._id);
             res.send({message: 'Solicitud creada', newSolicitud});
         }
@@ -114,6 +114,22 @@ consumidorCtrl.verificarConsumidor = async(req, res)=> {
         res.send(usuario._id);
     }catch(error){
         res.status(407).send('No hay usuario conectado')
+    }
+}
+
+consumidorCtrl.recuperarContrasena = async(req,res)=>{
+    try{
+        const {correo, contrasenaNueva} = req.body;
+        if (!correo) return res.status(400).send("debe ingresar correo");
+        const consumidor = await Consumidor.findOne({correo: correo});
+        if (!consumidor) return res.status(409).send("usuario no existente");
+        encryptedPassword = await bcrypt.hash(contrasenaNueva, 10);
+        await consumidor.update({$set:{contrasena: encryptedPassword}});
+        res.status(200).send('Contrasena actualizada');
+        transporter.sendEmail(consumidor, `Estimado ${consumidor.nombre} ${consumidor.apellido} su actualización de contraseña se ha realizado satisfactoriamente`);
+
+    }catch(err){
+        res.status(400).send("error de "+err)
     }
 }
 
